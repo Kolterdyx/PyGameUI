@@ -11,6 +11,12 @@ import pygame as pg
 
 
 class Slider:
+    """
+    Slider widget.
+
+    It can be used to select a value from a range from 0 to a maximum value
+    """
+
     def __init__(self, parent, *, x=0, y=0, orientation="horizontal", length=200, max=100):
         self.parent = parent
         self.screen = parent.screen
@@ -207,6 +213,7 @@ class Slider:
         self.max = max
 
     def set_length(self, length):
+
         self.length = length
         self.size = length + 15
         if self.orientation == "vertical":

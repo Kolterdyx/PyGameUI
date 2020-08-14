@@ -53,8 +53,36 @@ _characters = {
 }
 
 
-class Entry(pg.sprite.Sprite):
+class Entry:
+    """
+    Entry widget for recieving user text input.
+    """
+
     def __init__(self, parent, *, x=0, y=0, w=100, size=20, font="Arial", border=0, func=None, max_length=0):
+        """
+        Initialize entry.
+
+        Parameters
+        ----------
+        parent: class
+            A python class that has a 'screen' attribute of type 'pygame.Surface'.
+        x: int
+            x position in pixels.
+        y: int
+            y position in pixels.
+        w: int
+            Width of the entry in pixels.
+        size: int
+            Font size in pixels.
+        font: str
+            Font to be used in the entry.
+        border: int
+            Width of the widget's border. Set to 0 to remove the border.
+        func: function
+            A function that will be executed when the user presses enter while typing.
+        max_length: int
+            Max length in characters. Set to 0 for no limit.
+        """
         self.parent = parent
         self.rect = pg.Rect((x, y), (w, size + size / 4))
         self.image = pg.Surface(self.rect.size).convert_alpha()
@@ -111,7 +139,7 @@ class Entry(pg.sprite.Sprite):
         self.label = self.font.render(self.text, 1, self.font_color)
 
     def update(self):
-        """Update the widget"""
+        """Update and display the widget"""
         if self.c < 100 and self.cc == 1:
             self.c += self.cc
             self.cursor.fill(self.font_color)
