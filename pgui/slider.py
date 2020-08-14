@@ -3,7 +3,7 @@
 # @Email:  kolterdev@gmail.com
 # @Project: Pygame GUI
 # @Last modified by:   kolterdyx
-# @Last modified time: 14-Aug-2020
+# @Last modified time: 15-Aug-2020
 # @License: This file is subject to the terms and conditions defined in file 'LICENSE', which is part of this source code package.
 
 
@@ -13,11 +13,12 @@ import pygame as pg
 class Slider:
     """
     Slider widget.
-
     It can be used to select a value from a range from 0 to a maximum value
     """
 
     def __init__(self, parent, *, x=0, y=0, orientation="horizontal", length=200, max=100):
+        """Initialize the Widget"""
+
         self.parent = parent
         self.screen = parent.screen
         self.x = x
@@ -63,7 +64,7 @@ class Slider:
         self.label = self.font.render(self.text, 1, self.font_color)
 
     def update(self):
-
+        """Update the widget"""
         mousepos = pg.mouse.get_pos()
         p1, p2, p3 = pg.mouse.get_pressed()
 
@@ -138,6 +139,19 @@ class Slider:
                     self.rect.x + self.rect.width + 10, self.rect.y + self.rect.height - self.label.get_rect().height))
 
     def get_mark(self):
+        """
+        #### Description
+        Return the value marked by the slider
+
+        #### Parameters
+        None
+
+        #### Returns
+        `int`
+
+        #### Usage
+        `Slider.get_mark()`
+        """
         if self.orientation == "horizontal":
             mark = ((self.prect.x - self.x) / self.length) * self.max
             return round(mark)
@@ -146,43 +160,165 @@ class Slider:
             return round(mark)
 
     def set_border_width(self, width):
+        """
+        #### Description
+        Set the width of the border around the widget.
+        Set to 0 to remove the border entirely.
+
+        #### Parameters
+        width: int
+        Width in pixels of the border
+
+        #### Returns
+        None
+
+        #### Usage
+        Slider.set_border_width(5)
+
+        ---
+
+        """
         self.border_width = width
 
     def set_border_color(self, color):
         """
-        Set the color of the border around the entry
+        #### Description
+        Set the color of the border around the widget.
 
-        Parameters
-        ----------
-        color: tuple
-            A 3-tuple containing an RGB value
+        #### Parameters
+        `color: tuple`
+        A 3-tuple containing an RGB value
 
-        Returns
-        -------
+        #### Returns
         None
 
-        Usage:
-        Slider.set_border_color((34,45,18))
+        #### Usage
+        `Slider.set_border_color((34,45,18))`
+
+        ---
+
         """
         self.border_color = color
 
     def set_pointer_color(self, color):
+        """
+        #### Description
+        Set the color of the selector/pointer.
+
+        #### Parameters
+        `color: tuple`
+        A 3-tuple containing an RGB value
+
+        #### Returns
+        None
+
+        #### Usage
+        `Slider.set_pointer_color((34,45,18))`
+
+        ---
+
+        """
         self.pointer_color = color
 
     def set_bg_color(self, color):
+        """
+        #### Description
+        Set the color of the widget's background.
+
+        #### Parameters
+        `color: tuple`
+        A 3-tuple containing an RGB value
+
+        #### Returns
+        None
+
+        #### Usage
+        `Slider.set_bg_color((34,45,18))`
+
+        ---
+
+        """
         self.bg_color = color
 
-    def set_text(self, text):
+    def set_label(self, text):
+        """
+        #### Description
+        Set the color of the border around the widget.
+
+        #### Parameters
+        `text: str`
+        A string for the widget's label.
+
+        #### Returns
+        None
+
+        #### Usage
+        `Slider.set_label("Some text")`
+
+        ---
+
+        """
         self.text = text
         self.label = self.font.render(text, 1, self.font_color)
 
-    def set_text_side(self, side):
+    def set_label_side(self, side):
+        """
+        #### Description
+        Set the relative position of the label to the widget.
+
+        #### Parameters
+        `side: str`
+        A string from the list ["top", "bottom", "left", "right"]
+
+        #### Returns
+        None
+
+        #### Usage
+        `Slider.set_label_side("top")`
+
+        ---
+
+        """
         self.text_side = side
 
-    def set_text_alignment(self, side):
-        self.text_align = side
+    def set_label_alignment(self, alignment):
+        """
+        #### Description
+        Set the alignment of the label when its position is either "top" or "bottom".
+
+        #### Parameters
+        `alignment: str`
+        A string from the list ["left", "center", "right"]
+
+        #### Returns
+        None
+
+        #### Usage
+        `Slider.set_label_side("top")`
+
+        ---
+
+        """
+        if side in ["left", "center", "right"]:
+            self.text_align = alignment
+        else:
+            raise ValueError("Alignment must be either 'left', 'center' or 'right'")
 
     def set_font(self, font):
+        """
+        #### Description
+        Change the font of the widget's label.
+
+        #### Parameters
+        `font: str`
+        A font name such as "Arial" or a path to a font file '.ttf' or '.otf'.
+
+        #### Returns
+        None
+
+        #### Usage
+        `Slider.set_font("Arial")`
+        """
         self.font_name = font
         try:
             self.font = pg.font.Font(font, self.font_size)
@@ -190,14 +326,65 @@ class Slider:
             self.font = pg.font.SysFont(font, self.font_size)
 
     def set_font_size(self, size=10):
+        """
+        #### Description
+        Set the size of the widget's label font.
+
+        #### Parameters
+        `size: int`
+        The label font size in pixels.
+
+        #### Returns
+        None
+
+        #### Usage
+        `Slider.set_font_size(12)`
+
+        ---
+
+        """
         self.font_size = size
         self.font = pg.font.SysFont(self.font_path, size)
 
     def set_font_color(self, color=(0, 0, 0)):
+        """
+        #### Description
+        Set the color of the widget's label.
+
+        #### Parameters
+        `color: tuple`
+        A 3-tuple containing an RGB value
+
+        #### Returns
+        None
+
+        #### Usage
+        `Slider.set_font_color((34,45,18))`
+
+        ---
+
+        """
         self.font_color = color
         self.label = self.font.render(self.text, 1, color)
 
     def set_width(self, width):
+        """
+        #### Description
+        Set the width of the widget (height if horizontal, width if vertical)
+
+        #### Parameters
+        `width: int`
+        Width in pixels
+
+        #### Returns
+        None
+
+        #### Usage
+        `Slider.set_width(20)`
+
+        ---
+
+        """
         self.width = width
         if self.orientation == "vertical":
             self.rect = pg.Rect(self.pos, (self.width, self.size))
@@ -210,9 +397,43 @@ class Slider:
         self.prect.topleft = self.pos
 
     def set_max(self, max):
+        """
+        #### Description
+        Set maximum value for the selector
+
+        #### Parameters
+        `max: int`
+
+        #### Returns
+        None
+
+        #### Usage
+        `Slider.set_max(50)`
+
+        ---
+
+        """
         self.max = max
 
     def set_length(self, length):
+        """
+        #### Description
+        Set the length of the slider (height if vertical, width if horizontal)
+        The total length will be 15 pixels greater to include the pointer
+
+        #### Parameters
+        `length: int`
+        Length in pixels
+
+        #### Returns
+        None
+
+        #### Usage
+        `Slider.set_length(200)`
+
+        ---
+
+        """
 
         self.length = length
         self.size = length + 15
@@ -226,21 +447,20 @@ class Slider:
 
     def move(self, x, y):
         """
+        #### Description
         Change the widget's position
 
-        Parameters
-        ----------
-        x: int
-            Set widget's position along the x axis
-        y: int
-            Set widget's position along the y axis
+        #### Parameters
+        `x: int`
+        Set widget's position along the x axis
+        `y: int`
+        Set widget's position along the y axis
 
-        Returns
-        -------
+        #### Returns
         None
 
-        Usage:
-        Slider.move(200,300)
+        #### Usage
+        `Slider.move(200,300)`
         """
         self.x = x
         self.y = y

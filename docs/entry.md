@@ -1,8 +1,9 @@
 # Entry widget
 ## class Entry(builtins.object)
+###Description
 Entry widget for recieving user text input.
 
-## Usage:
+### Usage:
 ```python
 Entry(parent, *, x=0, y=0, w=100, size=20, font='Arial', border=0, func=None, max_length=0)
 ```

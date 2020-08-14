@@ -3,7 +3,7 @@
 # @Email:  kolterdev@gmail.com
 # @Project: Pygame GUI
 # @Last modified by:   kolterdyx
-# @Last modified time: 14-Aug-2020
+# @Last modified time: 15-Aug-2020
 # @License: This file is subject to the terms and conditions defined in file 'LICENSE', which is part of this source code package.
 
 
@@ -55,34 +55,46 @@ _characters = {
 
 class Entry:
     """
+    ### Description
     Entry widget for recieving user text input.
+
+    ### Usage
+    `Entry(parent, *, x=0, y=0, w=100, size=20, font='Arial', border=0, func=None, max_length=0)`
+
+    #### Parameters
+    `parent: class`
+    A python class that has a 'screen' attribute of type 'pygame.Surface'.
+
+    `x: int`
+    x position in pixels.
+
+    `y: int`
+    y position in pixels.
+
+    `w: int`
+    Width of the entry in pixels.
+
+    `size: int`
+    Font size in pixels.
+
+    `font: str`
+    Font to be used in the entry.
+
+    `border: int`
+    Width of the widget's border. Set to 0 to remove the border.
+
+    `func: function`
+    A function that will be executed when the user presses enter while typing.
+
+    `max_length: int`
+    Max length in characters. Set to 0 for no limit.
+
+    ---
+
     """
 
     def __init__(self, parent, *, x=0, y=0, w=100, size=20, font="Arial", border=0, func=None, max_length=0):
-        """
-        Initialize entry.
 
-        Parameters
-        ----------
-        parent: class
-            A python class that has a 'screen' attribute of type 'pygame.Surface'.
-        x: int
-            x position in pixels.
-        y: int
-            y position in pixels.
-        w: int
-            Width of the entry in pixels.
-        size: int
-            Font size in pixels.
-        font: str
-            Font to be used in the entry.
-        border: int
-            Width of the widget's border. Set to 0 to remove the border.
-        func: function
-            A function that will be executed when the user presses enter while typing.
-        max_length: int
-            Max length in characters. Set to 0 for no limit.
-        """
         self.parent = parent
         self.rect = pg.Rect((x, y), (w, size + size / 4))
         self.image = pg.Surface(self.rect.size).convert_alpha()
@@ -217,37 +229,41 @@ class Entry:
 
     def set_font_color(self, color):
         """
+        #### Description
         Set the color of the text.
 
-        Parameters
-        ----------
-        color: tuple
-            3-tuple containing an RGB value
+        #### Parameters
+        `color: tuple`
+        3-tuple containing an RGB value
 
-        Returns
-        -------
+        #### Returns
         None
 
-        Usage:
-        Entry.set_font_color((255,30,83))
+        #### Usage
+        `Entry.set_font_color((255,30,83))`
+
+        ---
+
         """
         self.font_color = color
 
     def set_font(self, font):
         """
+        #### Description
         Change the font of the entry.
 
-        Parameters
-        ----------
-        font: str
-            A font name such as "Arial" or a path to a font file '.ttf' or '.otf'
+        #### Parameters
+        `font: str`
+        A font name such as "Arial" or a path to a font file '.ttf' or '.otf'
 
-        Returns
-        -------
+        #### Returns
         None
 
-        Usage:
-        Entry.set_font("Arial")
+        #### Usage:
+        `Entry.set_font("Arial")`
+
+        ---
+
         """
         self.font_name = font
         try:
@@ -257,19 +273,21 @@ class Entry:
 
     def set_font_size(self, size):
         """
+        #### Description
         Change the font size of the entry.
 
-        Parameters
-        ----------
+        #### Parameters
         size: int
-            The size in pixels of the font
+        The size in pixels of the font
 
-        Returns
-        -------
-            None
+        #### Returns
+        None
 
-        Usage:
+        #### Usage:
         Entry.set_font_size(12)
+
+        ---
+
         """
         self.font_size = size
         try:
@@ -287,18 +305,20 @@ class Entry:
 
     def set_bg_color(self, color):
         """
+        #### Description
         Set the color of the background to 'color'
 
-        Parameters
-        ----------
+        #### Parameters
         color: tuple
-            A 3-tuple containing an RGB value.
+        A 3-tuple containing an RGB value.
 
-        Returns
-        -------
-            None
+        #### Returns
+        None
 
-        Usage:
+        #### Usage:
+        `Entry.set_bg_color((255,30,83))`
+
+        ---
 
         """
         self.bg_color = color
@@ -306,58 +326,66 @@ class Entry:
 
     def set_border_width(self, width):
         """
-        Set the width of the border around the entry.
+        #### Description
+        Set the width of the border around the widget.
         Set to 0 to remove the border entirely.
 
-        Parameters
-        ----------
-        width: int
-            Width in pixels of the border
+        #### Parameters
+        `width: int`
+        Width in pixels of the border
 
-        Returns
-        -------
+        #### Returns
         None
 
-        Usage:
-        Entry.set_border_width(5)
+        #### Usage
+        `Entry.set_border_width(5)`
+
+        ---
+
         """
         self.border_width = width
 
     def set_border_color(self, color):
         """
+        #### Description
         Set the color of the border around the widget
 
-        Parameters
-        ----------
-        color: tuple
-            A 3-tuple containing an RGB value
+        #### Parameters
+        `color: tuple`
+        A 3-tuple containing an RGB value
 
-        Returns
-        -------
+        #### Returns
         None
 
-        Usage:
-        Entry.set_border_color((34,45,18))
+        #### Usage:
+        `Entry.set_border_color((34,45,18))`
+
+        ---
+
         """
         self.border_color = color
 
     def move(self, x, y):
         """
+        #### Description
         Change the widget's position
 
-        Parameters
+        #### Parameters
         ----------
-        x: int
-            Set widget's position along the x axis
-        y: int
-            Set widget's position along the y axis
+        `x: int`
+        Set widget's position along the x axis
+        `y: int`
+        Set widget's position along the y axis
 
-        Returns
+        #### Returns
         -------
         None
 
-        Usage:
-        Entry.move(200,300)
+        #### Usage:
+        `Entry.move(200,300)`
+
+        ---
+
         """
         self.x = x
         self.y = y
