@@ -39,139 +39,144 @@ Max length in characters. Set to 0 for no limit.
 ---
 
 ## Methods
----
 ### `get_text()`
-##### Description
+#### Description
 Return the text typed in the entry.
 
-##### Parameters
+#### Parameters
 None
 
-##### Returns
+#### Returns
 `str`
 
-##### Usage
+#### Usage
 `Entry.get_text()`
 
 ---
 
 ### `move(x, y)`
-##### Description
+#### Description
 Change the widget's position
 
-##### Parameters
+#### Parameters
 `x: int`   
 Set widget's position along the x axis
 `y: int`   
 Set widget's position along the y axis
 
-##### Usage:
+#### Usage:
 `Entry.move(200,300)`
 
 ---
 
 ### `set_bg_color(self, color)`
-##### Description
+#### Description
 Set the color of the background to 'color'
 
-##### Parameters
+#### Parameters
 `color: tuple`   
 A 3-tuple containing an RGB value.
 
-##### Returns
+#### Returns
 None
 
-##### Usage
+#### Usage
 `Entry.set_bg_color((43,65,24))`
 
 ---
 
 ### `set_border_color(self, color)`
+#### Description
 Set the color of the border around the widget
 
-##### Parameters
+#### Parameters
 `color: tuple`   
 A 3-tuple containing an RGB value
 
-##### Returns
+#### Returns
 None
 
-##### Usage:
+#### Usage
 `Entry.set_border_color((34,45,18))`
 
 ---
 
 ### `set_border_width(self, width)`
+#### Description
 Set the width of the border around the entry.
 Set to 0 to remove the border entirely.
 
-##### Parameters
+#### Parameters
 `width: int`   
 Width in pixels of the border
 
-##### Returns
+#### Returns
 None
 
-##### Usage:
+#### Usage
 `Entry.set_border_width(5)`
 
 ---
 
 ### `set_font(self, font)`
+#### Description
 Change the font of the entry.
 
-##### Parameters
+#### Parameters
 `font: str`   
 A font name such as "Arial" or a path to a font file '.ttf' or '.otf'
 
-##### Returns
+#### Returns
 None
 
-##### Usage:
+#### Usage
 `Entry.set_font("Arial")`
 
 ---
 
 ### `set_font_color(self, color)`
+#### Description
 Set the color of the text.
 
-##### Parameters
+#### Parameters
 `color: tuple`   
 3-tuple containing an RGB value
 
-##### Returns
+#### Returns
 None
 
-##### Usage:
+#### Usage
 `Entry.set_font_color((255,30,83))`
 
 ---
 
 ### `set_font_size(self, size)`
+#### Description
 Change the font size of the entry.
 
-##### Parameters
+#### Parameters
 `size: int`   
 The size in pixels of the font
 
-##### Returns
+#### Returns
 None
 
-##### Usage:
+#### Usage
 `Entry.set_font_size(12)`
 
 ---
 
 ### `update(self)`
+#### Description
 Update and display the widget
 
-##### Parameters
+#### Parameters
 None
 
-##### Returns
+#### Returns
 None
 
-##### Usage
+#### Usage
 `Entry.update()`
 
 ---
