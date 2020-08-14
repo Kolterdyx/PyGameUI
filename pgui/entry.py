@@ -1,15 +1,15 @@
-# @Author: kolterdyx
+# @Author: Ciro García <kolterdyx>
 # @Date:   14-Aug-2020
 # @Email:  kolterdev@gmail.com
 # @Project: Pygame GUI
 # @Last modified by:   kolterdyx
 # @Last modified time: 14-Aug-2020
-# @License: This file is subject to the terms and conditions defined in file 'LICENSE.txt',\nwhich is part of this source code package.
+# @License: This file is subject to the terms and conditions defined in file 'LICENSE', which is part of this source code package.
 
 
 import pygame as pg
 
-letters = {
+_letters = {
     pg.K_a: ['a', 'A'],
     pg.K_b: ['b', 'B'],
     pg.K_c: ['c', 'C'],
@@ -38,7 +38,7 @@ letters = {
     pg.K_z: ['z', 'Z'],
 }
 
-characters = {
+_characters = {
     pg.K_SPACE: ' ',
     pg.K_0: '0',
     pg.K_1: '1',
@@ -95,7 +95,7 @@ class Entry(pg.sprite.Sprite):
 
         self.max_length = max_length
 
-    def add_char(self, char):
+    def _add_char(self, char):
         self.keypressed = True
         if self.max_length:
             if len(self.text) < self.max_length:
@@ -105,12 +105,13 @@ class Entry(pg.sprite.Sprite):
             self.text += char
             self.label = self.font.render(self.text, 1, self.font_color)
 
-    def remove_char(self):
+    def _remove_char(self):
         self.keypressed = True
         self.text = self.text[:-1]
         self.label = self.font.render(self.text, 1, self.font_color)
 
     def update(self):
+        """Update the widget"""
         if self.c < 100 and self.cc == 1:
             self.c += self.cc
             self.cursor.fill(self.font_color)
@@ -133,17 +134,17 @@ class Entry(pg.sprite.Sprite):
             self.pressing = False
 
         if self.typing and not self.keypressed:
-            for a in characters:
+            for a in _characters:
                 if keys[a]:
-                    self.add_char(characters[a])
-            for b in letters:
+                    self._add_char(_characters[a])
+            for b in _letters:
                 if keys[b] and (keys[pg.K_LSHIFT] or keys[pg.K_RSHIFT]):
-                    self.add_char(letters[b][1])
+                    self._add_char(_letters[b][1])
                 if keys[b] and not (keys[pg.K_LSHIFT] or keys[pg.K_RSHIFT]):
-                    self.add_char(letters[b][0])
+                    self._add_char(_letters[b][0])
             if keys[pg.K_BACKSPACE]:
                 self.keypressed = True
-                self.remove_char()
+                self._remove_char()
             if keys[pg.K_RETURN]:
                 self.keypressed = True
                 if self.func:
@@ -183,12 +184,43 @@ class Entry(pg.sprite.Sprite):
             pg.draw.rect(self.screen, self.border_color, self.border, self.border_width)
 
     def get_text(self):
+        """Return the text typed in the entry."""
         return self.text
 
     def set_font_color(self, color):
+        """
+        Set the color of the text.
+
+        Parameters
+        ----------
+        color: tuple
+            3-tuple containing an RGB value
+
+        Returns
+        -------
+        None
+
+        Usage:
+        Entry.set_font_color((255,30,83))
+        """
         self.font_color = color
 
     def set_font(self, font):
+        """
+        Change the font of the entry.
+
+        Parameters
+        ----------
+        font: str
+            A font name such as "Arial" or a path to a font file '.ttf' or '.otf'
+
+        Returns
+        -------
+        None
+
+        Usage:
+        Entry.set_font("Arial")
+        """
         self.font_name = font
         try:
             self.font = pg.font.Font(font, self.font_size)
@@ -196,6 +228,21 @@ class Entry(pg.sprite.Sprite):
             self.font = pg.font.SysFont(font, self.font_size)
 
     def set_font_size(self, size):
+        """
+        Change the font size of the entry.
+
+        Parameters
+        ----------
+        size: int
+            The size in pixels of the font
+
+        Returns
+        -------
+            None
+
+        Usage:
+        Entry.set_font_size(12)
+        """
         self.font_size = size
         try:
             self.font = pg.font.SysFont(self.font_name, self.font_size)
@@ -211,16 +258,79 @@ class Entry(pg.sprite.Sprite):
         self.cursor_rect.y = 1
 
     def set_bg_color(self, color):
+        """
+        Set the color of the background to 'color'
+
+        Parameters
+        ----------
+        color: tuple
+            A 3-tuple containing an RGB value.
+
+        Returns
+        -------
+            None
+
+        Usage:
+
+        """
         self.bg_color = color
         self.image.fill(color)
 
     def set_border_width(self, width):
+        """
+        Set the width of the border around the entry.
+        Set to 0 to remove the border entirely.
+
+        Parameters
+        ----------
+        width: int
+            Width in pixels of the border
+
+        Returns
+        -------
+        None
+
+        Usage:
+        Entry.set_border_width(5)
+        """
         self.border_width = width
 
     def set_border_color(self, color):
+        """
+        Set the color of the border around the widget
+
+        Parameters
+        ----------
+        color: tuple
+            A 3-tuple containing an RGB value
+
+        Returns
+        -------
+        None
+
+        Usage:
+        Entry.set_border_color((34,45,18))
+        """
         self.border_color = color
 
     def move(self, x, y):
+        """
+        Change the widget's position
+
+        Parameters
+        ----------
+        x: int
+            Set widget's position along the x axis
+        y: int
+            Set widget's position along the y axis
+
+        Returns
+        -------
+        None
+
+        Usage:
+        Entry.move(200,300)
+        """
         self.x = x
         self.y = y
         self.pos = (x, y)

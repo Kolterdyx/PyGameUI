@@ -10,6 +10,11 @@ Use the package manager [pip](https://pip.pypa.io/en/stable/) to install PyGameU
 pip install pgui
 ```
 
+You can also install from source this way:
+```bash
+python3 setup.py install --user
+```
+
 ## Usage
 
 PyGameUI widgets need a parent class with a screen attribute of type pygame.Surface and an event loop to be used. This is a simple working example:
@@ -48,6 +53,9 @@ while True:
     main.update()
     main.events()
 ```
+
+## Development
+This module is still being developed, and it may be unstable or buggy.
 
 ## Contributing
 Pull requests are welcome. For major changes, please open an issue first to discuss what you would like to change.

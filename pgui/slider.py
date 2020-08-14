@@ -1,10 +1,10 @@
-# @Author: kolterdyx
+# @Author: Ciro García <kolterdyx>
 # @Date:   14-Aug-2020
 # @Email:  kolterdev@gmail.com
 # @Project: Pygame GUI
 # @Last modified by:   kolterdyx
 # @Last modified time: 14-Aug-2020
-# @License: This file is subject to the terms and conditions defined in file 'LICENSE.txt',\nwhich is part of this source code package.
+# @License: This file is subject to the terms and conditions defined in file 'LICENSE', which is part of this source code package.
 
 
 import pygame as pg
@@ -143,6 +143,21 @@ class Slider:
         self.border_width = width
 
     def set_border_color(self, color):
+        """
+        Set the color of the border around the entry
+
+        Parameters
+        ----------
+        color: tuple
+            A 3-tuple containing an RGB value
+
+        Returns
+        -------
+        None
+
+        Usage:
+        Slider.set_border_color((34,45,18))
+        """
         self.border_color = color
 
     def set_pointer_color(self, color):
@@ -203,6 +218,23 @@ class Slider:
         self.image = pg.Surface(self.rect.size).convert_alpha()
 
     def move(self, x, y):
+        """
+        Change the widget's position
+
+        Parameters
+        ----------
+        x: int
+            Set widget's position along the x axis
+        y: int
+            Set widget's position along the y axis
+
+        Returns
+        -------
+        None
+
+        Usage:
+        Slider.move(200,300)
+        """
         self.x = x
         self.y = y
         self.pos = (x, y)
