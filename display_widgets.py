@@ -8,7 +8,7 @@
 
 
 import pygame as pg
-from __init__ import *
+from pgui import *
 
 pg.init()
 
