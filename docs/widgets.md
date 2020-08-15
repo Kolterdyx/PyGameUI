@@ -22,12 +22,16 @@ class Main:
 	def __init__(self):
 		self.screen = pygame.display.set_mode((600,600))
 
+	def update(self):
+		pygame.display.flip()
+
 	def events(self):
 		for event in pygame.event.get():
 			pass
 
 m = Main()
 while True:
+	m.update()
 	m.events()
 ```
 
