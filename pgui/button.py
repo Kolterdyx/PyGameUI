@@ -3,7 +3,7 @@
 # @Email:  kolterdev@gmail.com
 # @Project: Pygame GUI
 # @Last modified by:   kolterdyx
-# @Last modified time: 14-Aug-2020
+# @Last modified time: 15-Aug-2020
 # @License: This file is subject to the terms and conditions defined in file 'LICENSE.txt', which is part of this source code package.
 
 
@@ -12,9 +12,41 @@ import pygame as pg
 pg.init()
 
 
-class Button():
+class Button:
+    """
+    ### Description
+    Button widget used to execute functions either on press or on release
 
-    def __init__(self, parent, *, x=0, y=0, w=100, h=50, func=None, text="Button", font="Arial", font_size=20, valuetopass=None):
+    ### Usage
+    `Button(parent, *, x=0, y=0, width=100, height=50, func=None, text="Button", valuetopass=None)`
+
+    #### Parameters
+    `x: int`
+    x position in pixels.
+
+    `y: int`
+    y position in pixels.
+
+    `width: int`
+    Width in pixels.
+
+    `height: int`
+    Height in pixels.
+
+    `func: function`
+    Function to be called when the button is pressed.
+
+    `text: str`
+    Text to display in the button.
+
+    `valuetopass`
+    If specified, value to be passed to the function when called.
+
+    ---
+
+    """
+
+    def __init__(self, parent, *, x=0, y=0, width=100, height=50, func=None, text="Button", valuetopass=None):
         self.parent = parent
         self.rect = pg.Rect((x, y), (w, h))
         self.text = text
@@ -39,6 +71,13 @@ class Button():
         self.already_pressed = False
 
     def update(self):
+        """
+        #### Description
+        Update and display the widget
+
+        #### Usage
+        `Button.update()`
+        """
         mousepos = pg.mouse.get_pos()
         p1, p2, p3 = pg.mouse.get_pressed()
 
@@ -72,29 +111,152 @@ class Button():
             pg.draw.rect(self.screen, self.border_color, self.border, self.border_width)
 
     def set_font_color(self, color):
+        """
+        #### Description
+        Set color of the widget's label font
+
+        #### Parameters
+        `color: tuple`
+        A 3-tuple containing an RGB value
+
+        #### Returns
+        None
+
+        #### Usage
+        `Button.set_font_color`
+
+        ---
+
+        """
         self.font_color = color
 
     def set_font(self, font):
+        """
+        #### Description
+        Set the widget's label font.
+
+        #### Parameters
+        `font: str`
+        A string containing either a font name or a path to a font file '.ttf' or '.otf'
+
+        #### Returns
+        None
+
+        #### Usage
+        `Button.set_font("Arial")`
+        `Button.set_font("path/to/font.ttf")`
+
+        ---
+
+        """
         self.font_name = font
         try:
             self.font = pg.font.Font(font, self.font_size)
         except:
             self.font = pg.font.SysFont(font, self.font_size)
 
-    def set_bg(self, color):
+    def set_bg_color(self, color):
+        """
+        #### Description
+        Set the background color of the widget
+
+        #### Parameters
+        `color: tuple`
+        A 3-tuple containing an RGB value
+
+        #### Returns
+        None
+
+        #### Usage
+        `Button.set_bg_color((43,63,255))`
+
+        ---
+
+        """
         self.bgcolor = color
         self.image.fill(color)
 
     def set_border_width(self, width):
+        """
+        #### Description
+        Set the width of the border around the widget
+
+        #### Parameters
+        `width: int`
+        Border width in pixels.
+        Set to 0 for no border
+
+        #### Returns
+        None
+
+        #### Usage
+        `Button.set_border_width(5)`
+
+        ---
+
+        """
         self.border_width = width
 
     def set_border_color(self, color):
+        """
+        #### Description
+        Set the color of the border around the widget
+
+        #### Parameters
+        `color: tuple`
+        A 3-tuple containing an RGB value
+
+        #### Returns
+        None
+
+        #### Usage
+        `Button.set_border_color((34,45,18))`
+
+        ---
+
+        """
         self.border_color = color
 
-    def set_text(self, text):
+    def set_label(self, text):
+        """
+        #### Description
+        Set the widget's label
+
+        #### Parameters
+        `text: str`
+        A string with the text to be displayed
+
+        #### Returns
+        None
+
+        #### Usage
+        Button.set_label("This is a button")
+
+        ---
+
+        """
         self.text = text
 
     def move(self, x, y):
+        """
+        #### Description
+        Change the widget's position
+
+        #### Parameters
+        `x: int`
+        Set widget's position along the x axis
+        `y: int`
+        Set widget's position along the y axis
+
+        #### Returns
+        None
+
+        #### Usage
+        `Button.move(200,300)`
+
+        ---
+
+        """
         self.x = x
         self.y = y
         self.pos = (x, y)
