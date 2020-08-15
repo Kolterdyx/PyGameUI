@@ -10,5 +10,5 @@ This is the PyGameUI Documentation, written in MarkDown, because I can't figure 
   * [CheckBox](widgets/checkbox.md)
   * [Slider](widgets/slider.md)
 * Examples
-  * [Basic example](examples/basic_example.md)
-  * [Offset entry with slider](examples/offset_entry_with_slider.md)
+  * [Basic example](examples/1/basic_example.md)
+  * [Offset entry with slider](examples/2/offset_entry_with_slider.md)
