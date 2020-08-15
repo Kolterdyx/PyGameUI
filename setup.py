@@ -3,7 +3,7 @@
 # @Email:  kolterdev@gmail.com
 # @Project: Pygame GUI
 # @Last modified by:   kolterdyx
-# @Last modified time: 14-Aug-2020
+# @Last modified time: 15-Aug-2020
 # @License: This file is subject to the terms and conditions defined in file 'LICENSE', which is part of this source code package.
 
 
@@ -14,7 +14,7 @@ with open("README.md", "r") as fh:
 
 setuptools.setup(
     name="pgui",  # Replace with your own username
-    version="0.0.1",
+    version="0.0.2",
     author="Ciro García",
     author_email="kolterdev@gmail.com",
     description="A GUI module compatible with pygame",

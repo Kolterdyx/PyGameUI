@@ -9,6 +9,7 @@
 
 * Pygame imported
 * A main class with a `screen` attribute of type `pygame.Surface`
+* An update function
 * An event loop
 
 #### Minimal code required
@@ -74,3 +75,6 @@ while True:
 	main.update()
 	main.events()
 ```
+
+---
+[Back to README](https://github.com/Kolterdyx/PyGameUI#pygameui)

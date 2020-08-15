@@ -3,7 +3,7 @@ This is the PyGameUI Documentation, written in MarkDown, because I can't figure 
 
 ## Contents
 
-* Installation
+* [Installation](https://github.com/Kolterdyx/PyGameUI#installation)
 * [Widget Documentation](widgets.md)
   * [Entry](entry.md)
   * [Button](button.md)
