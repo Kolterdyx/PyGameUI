@@ -156,4 +156,4 @@ Update and display the widget
 `Button.update()`
 
 ---
-[Go back to index](index.md)
+[Go back to index](../index.md)

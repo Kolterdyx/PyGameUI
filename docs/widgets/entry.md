@@ -1,6 +1,6 @@
 # Entry widget
 ## class Entry(builtins.object)
-###Description
+### Description
 Entry widget for recieving user text input.
 
 ### Usage:
@@ -40,6 +40,21 @@ Max length in characters. Set to 0 for no limit.
 ---
 
 ## Methods
+### `get_offset(self)`
+#### Description
+Get the display offset in pixels of the label in the entry.
+
+#### Parameters
+None
+
+#### Returns
+`int`
+
+#### Usage
+`Entry.get_offset()`
+
+---
+
 ### `get_text()`
 #### Description
 Return the text typed in the entry.
@@ -167,6 +182,24 @@ None
 
 ---
 
+### `set_offset(self, offset)`
+
+#### Description
+Set the display offset in pixels of the label in the entry.
+This number of pixels will be substracted from the x position of the label
+
+#### Parameters
+`offset: int`
+Number of pixels to move the label to the left
+
+#### Returns
+None
+
+#### Usage
+`Entry.set_offset(20)`
+
+---
+
 ### `update(self)`
 #### Description
 Update and display the widget
@@ -181,4 +214,4 @@ None
 `Entry.update()`
 
 ---
-[Go back to index](index.md)
+[Go back to index](../index.md)

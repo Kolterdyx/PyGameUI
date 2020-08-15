@@ -262,4 +262,4 @@ Update and draw the widget.
 `CheckBox.update()`
 
 ---
-[Go back to index](index.md)
+[Go back to index](../index.md)

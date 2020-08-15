@@ -1,6 +1,5 @@
 # Slider widget
 ## class Slider(builtins.object)
-
 ### Description
 It can be used to select a value from a range from 0 to a maximum value
 
@@ -255,6 +254,39 @@ None
 
 ---
 
+### `set_pointer_border_color(self, color)`
+#### Description
+Set the border color of the selector/pointer.
+
+#### Parameters
+`color: tuple`
+A 3-tuple containing an RGB value
+
+#### Returns
+None
+
+#### Usage
+`Slider.set_pointer_border_color((34,45,18))`
+
+---
+
+### `set_pointer_border_width`
+
+#### Description
+Set the border width of the selector/pointer.
+
+#### Parameters
+`width: int`
+The width of the border in pixels
+
+#### Returns
+None
+
+#### Usage
+`Slider.set_pointer_border_width(2)`
+
+---
+
 ### `set_width(self, width)`
 #### Description
 Set the width of the widget (height if horizontal, width if vertical)
@@ -279,4 +311,4 @@ Update the widget
 `Slider.update()`
 
 ---
-[Go back to index](index.md)
+[Go back to index](../index.md)

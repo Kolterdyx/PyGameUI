@@ -1,25 +1,13 @@
-# PyGameUI
+#!/usr/bin/python3
+# @Author: Ciro García <kolterdyx>
+# @Date:   14-Aug-2020
+# @Email:  kolterdev@gmail.com
+# @Project: Pygame GUI
+# @Last modified by:   kolterdyx
+# @Last modified time: 15-Aug-2020
+# @License: This file is subject to the terms and conditions defined in file 'LICENSE', which is part of this source code package.
 
-PyGameUi (or pgui) is a Python library for creating simple GUI's in pygame
 
-## Installation
-
-Use the package manager [pip](https://pip.pypa.io/en/stable/) to install PyGameUI.
-
-```bash
-pip install pgui
-```
-
-You can also install from source this way:
-```bash
-python3 setup.py install --user
-```
-
-## Usage
-
-PyGameUI widgets need a parent class with a screen attribute of type pygame.Surface and an event loop to be used. This is a simple working example:
-
-```python
 import pgui
 import pygame
 import sys
@@ -70,38 +58,17 @@ class Main:
 
     # We can use a separate method for event handling
     def events(self):
-        pass
         # The loop does not need to have anything in it but we
         # can use it however we want
-
-        # for event in pygame.event.get():
-        #     if event.type == pygame.QUIT: # Exit if the window closing button is clicked
-        #         raise SystemExit  # This is just the same as sys.exit()
-        #     if event.type == pygame.KEYDOWN:
-        #         if event.key == pygame.K_ESCAPE: # Exit if the 'Esc' key is pressed
-        #             raise SystemExit  # This is just the same as sys.exit()
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                raise SystemExit  # This is just the same as sys.exit()
+            if event.type == pygame.KEYDOWN:
+                if event.key == pygame.K_ESCAPE:
+                    raise SystemExit  # This is just the same as sys.exit()
 
 
 main = Main()
 while True:
     main.update()
     main.events()
-```
-
-## Documentation
-You can read the documentation [here](https://github.com/Kolterdyx/PyGameUI/blob/master/docs/index.md#pygameui-documentation)
-
-## Development
-This module is still being developed, and it may be unstable or buggy.
-
-## ChangeLog
-
-You can see the change logs [here](https://github.com/Kolterdyx/PyGameUI/blob/master/CHANGELOG.md)
-
-## Contributing
-Pull requests are welcome. For major changes, please open an issue first to discuss what you would like to change.
-
-Please make sure to update tests as appropriate.
-
-## License
-[MIT](https://choosealicense.com/licenses/mit/)

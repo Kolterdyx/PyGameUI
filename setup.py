@@ -13,8 +13,8 @@ with open("README.md", "r") as fh:
     long_description = fh.read()
 
 setuptools.setup(
-    name="pgui",  # Replace with your own username
-    version="0.0.2",
+    name="pgui",
+    version="0.0.3",
     author="Ciro García",
     author_email="kolterdev@gmail.com",
     description="A GUI module compatible with pygame",
