@@ -277,3 +277,6 @@ Update the widget
 
 #### Usage
 `Slider.update()`
+
+---
+[Go back to index](index.md)

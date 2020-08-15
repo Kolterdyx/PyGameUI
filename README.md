@@ -54,6 +54,9 @@ while True:
     main.events()
 ```
 
+## Documentation
+You can read the documentation [here](https://github.com/Kolterdyx/PyGameUI/blob/master/docs/index.md#pygameui-documentation)
+
 ## Development
 This module is still being developed, and it may be unstable or buggy.
 
