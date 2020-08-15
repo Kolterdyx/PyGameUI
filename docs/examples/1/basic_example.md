@@ -1,14 +1,10 @@
-#!/usr/bin/python3
-# -*- coding: utf-8 -*-
-# @Author: Ciro García <kolterdyx>
-# @Date:   14-Aug-2020
-# @Email:  kolterdev@gmail.com
-# @Project: Pygame GUI
-# @Last modified by:   kolterdyx
-# @Last modified time: 15-Aug-2020
-# @License: This file is subject to the terms and conditions defined in file 'LICENSE', which is part of this source code package.
+# Basic example
 
+This is a very simple demonstration of how the widgets are used and how they look.
 
+### Code
+
+```python
 ########################################################################
 # This example showcases a few widgets for the user to experiment with #
 ########################################################################
@@ -112,3 +108,13 @@ main = Main()
 while True:
     main.update()
     main.events()
+
+```
+
+### Screenshot
+
+![Basic example](screenshot.png)
+
+---
+
+[Go back to index](../../index.md)

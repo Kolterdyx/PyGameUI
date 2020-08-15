@@ -32,7 +32,7 @@ _letters = {
     pg.K_t: ['t', 'T'],
     pg.K_u: ['u', 'U'],
     pg.K_v: ['v', 'V'],
-    pg.K_w: ['width', 'width'],
+    pg.K_w: ['w', 'W'],
     pg.K_x: ['x', 'X'],
     pg.K_y: ['y', 'Y'],
     pg.K_z: ['z', 'Z'],
