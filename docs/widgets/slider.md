@@ -124,6 +124,22 @@ None
 
 ---
 
+### `set_mark(self, mark)`
+#### Description
+Set the value the pointer is marking.
+
+#### Parameters
+`mark: int`
+An integer in range(0, Slider.max)
+
+#### Returns
+None
+
+#### Usage
+`Slider.set_mark(34)`
+
+---
+
 ### `set_label(self, text)`
 #### Description
 Set the color of the border around the widget.

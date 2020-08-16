@@ -1,4 +1,7 @@
 # ChangeLog
+### 0.0.7
+* Added `set_mark(mark)` method to the slider to handle the change appropiately.
+
 ### 0.0.6.post1
 * Forgot to update the documentation to the new version
 

@@ -14,7 +14,7 @@ with open("README.md", "r") as fh:
 
 setuptools.setup(
     name="pgui",
-    version="0.0.6-1",
+    version="0.0.7",
     author="Ciro García",
     author_email="kolterdev@gmail.com",
     description="A GUI module compatible with pygame",

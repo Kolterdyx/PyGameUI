@@ -175,6 +175,16 @@ class Slider:
         self._text = text
         self._label = self._font.render(text, 1, self._font_color)
 
+    def set_mark(self, mark):
+        if mark not in range(0, self.max):
+            raise ValueError("int out of range.")
+        else:
+            self.mark = mark
+            if self.orientation == "horizontal":
+                self._prect.x = round(self.x + (self.mark / self.max) * self.length)
+            if self.orientation == "vertical":
+                self._prect.y = round(self.y + (self.mark / self.max) * self.length)
+
     def set_font(self, font):
         """
         #### Description
