@@ -1,4 +1,7 @@
 # ChangeLog
+### 0.0.7.post2
+* Another bug.
+
 ### 0.0.7.post1
 * Sneaky bug I fixed.
 

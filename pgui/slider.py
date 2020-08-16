@@ -181,9 +181,9 @@ class Slider:
         else:
             self.mark = mark
             if self._orientation == "horizontal":
-                self._prect.x = round(self.x + (self.mark / self.max) * self._length)
+                self._prect.x = round(self._x + (self.mark / self.max) * self._length)
             if self._orientation == "vertical":
-                self._prect.y = round(self.y + (self.mark / self.max) * self._length)
+                self._prect.y = round(self._y + (self.mark / self.max) * self._length)
 
     def set_font(self, font):
         """
