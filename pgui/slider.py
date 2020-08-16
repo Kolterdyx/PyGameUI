@@ -3,7 +3,7 @@
 # @Email:  kolterdev@gmail.com
 # @Project: Pygame GUI
 # @Last modified by:   kolterdyx
-# @Last modified time: 15-Aug-2020
+# @Last modified time: 16-Aug-2020
 # @License: This file is subject to the terms and conditions defined in file 'LICENSE', which is part of this source code package.
 
 
@@ -20,269 +20,139 @@ class Slider:
         """Initialize the Widget"""
 
         self.parent = parent
-        self.screen = parent.screen
-        self.x = x
-        self.y = y
-        self.pos = (x, y)
-        self.orientation = orientation
-        self.length = length
-        self.size = length + 15
-        self.max = max
-        self.dragging = False
-        self.width = 20
+        self._screen = parent.screen
+        self._orientation = orientation
+        self._length = length
+        self._size = length + 15
+        self._dragging = False
+        self._width = 20
+        self._x = x
+        self._y = y
+        self._pos = (x, y)
 
-        if self.orientation == "vertical":
-            self.rect = pg.Rect(self.pos, (self.width, self.size))
-            self.pointer = pg.Surface((self.width, 15)).convert_alpha()
-        elif self.orientation == "horizontal":
-            self.rect = pg.Rect(self.pos, (self.size, self.width))
-            self.pointer = pg.Surface((15, self.width)).convert_alpha()
+        # ------- ATTRIBUTES -------
+        self.max = max
+        self.mark = 0
+        self.border_width = 0
+        self.border_color = (0, 0, 0)
+        self.pointer_color = (128, 128, 128)
+        self.pointer_border_color = (0, 0, 0)
+        self.pointer_border_width = 0
+        self.bg_color = (255, 255, 255)
+        # --------------------------
+
+        if self._orientation == "vertical":
+            self._rect = pg.Rect(self._pos, (self._width, self._size))
+            self._pointer = pg.Surface((self._width, 15)).convert_alpha()
+        elif self._orientation == "horizontal":
+            self._rect = pg.Rect(self._pos, (self._size, self._width))
+            self._pointer = pg.Surface((15, self._width)).convert_alpha()
         else:
             print("Orientation must be either \"vertical\" or \"horizontal\"")
             raise SystemExit
 
-        self.image = pg.Surface(self.rect.size).convert_alpha()
-        self.image.fill((255, 255, 255))
-        self.pointer.fill((150, 150, 150))
-        self.prect = self.pointer.get_rect()
-        self.prect.topleft = self.rect.topleft
+        self._image = pg.Surface(self._rect.size).convert_alpha()
+        self._image.fill((255, 255, 255))
+        self._pointer.fill((150, 150, 150))
+        self._prect = self._pointer.get_rect()
+        self._prect.topleft = self._rect.topleft
 
-        self.border_width = 0
-        self.border_color = (0, 0, 0)
-
-        self.pointer_color = (128, 128, 128)
-        self.pborder_color = (0, 0, 0)
-        self.pborder_width = 0
-
-        self.bg_color = (255, 255, 255)
-
-        self.text = "Slider"
-        self.text_side = "top"
-        self.text_align = "left"
-        self.font_size = 20
-        self.font_color = (0, 0, 0)
-        self.font = pg.font.SysFont("Arial", self.font_size)
-        self.font_name = "Arial"
-        self.label = self.font.render(self.text, 1, self.font_color)
+        self._text = ""
+        self._text_side = "top"
+        self._text_align = "left"
+        self._font_size = 20
+        self._font_color = (0, 0, 0)
+        self._font = pg.font.SysFont("Arial", self._font_size)
+        self._font_name = "Arial"
+        self._label = self._font.render(self._text, 1, self._font_color)
 
     def update(self):
         """Update the widget"""
         mousepos = pg.mouse.get_pos()
         p1, p2, p3 = pg.mouse.get_pressed()
 
-        if self.prect.collidepoint(mousepos) and p1:
-            self.dragging = True
+        self._pos = (self._x, self._y)
+        self._x, self._y = self._pos
 
-        if self.rect.collidepoint(mousepos) and p1:
-            if self.orientation == "vertical":
-                self.prect.centery = mousepos[1]
-            elif self.orientation == "horizontal":
-                self.prect.centerx = mousepos[0]
+        if self._prect.collidepoint(mousepos) and p1:
+            self._dragging = True
 
-        self.screen.blit(self.image, self.pos)
-        if self.orientation == "vertical":
-            if self.dragging:
-                if self.prect.y >= self.y:
-                    if self.prect.y <= self.y + self.size - self.prect.height:
-                        self.prect.centery = mousepos[1]
+        if self._rect.collidepoint(mousepos) and p1:
+            if self._orientation == "vertical":
+                self._prect.centery = mousepos[1]
+            elif self._orientation == "horizontal":
+                self._prect.centerx = mousepos[0]
+
+        self._screen.blit(self._image, self._pos)
+        if self._orientation == "vertical":
+            if self._dragging:
+                if self._prect.y >= self._y:
+                    if self._prect.y <= self._y + self._size - self._prect.height:
+                        self._prect.centery = mousepos[1]
                     else:
-                        self.prect.y = self.y + self.size - self.prect.height
-                        self.dragging = False
+                        self._prect.y = self._y + self._size - self._prect.height
+                        self._dragging = False
                 else:
-                    self.prect.y = self.y
-                    self.dragging = False
+                    self._prect.y = self._y
+                    self._dragging = False
 
                 if not p1:
-                    self.dragging = False
+                    self._dragging = False
 
-        elif self.orientation == "horizontal":
+        elif self._orientation == "horizontal":
 
-            if self.dragging:
-                if self.prect.x >= self.x:
-                    if self.prect.x <= self.x + self.size - self.prect.width:
-                        self.prect.centerx = mousepos[0]
+            if self._dragging:
+                if self._prect.x >= self._x:
+                    if self._prect.x <= self._x + self._size - self._prect.width:
+                        self._prect.centerx = mousepos[0]
                     else:
-                        self.prect.x = self.x + self.size - self.prect.width
-                        self.dragging = False
+                        self._prect.x = self._x + self._size - self._prect.width
+                        self._dragging = False
                 else:
-                    self.prect.x = self.x
-                    self.dragging = False
+                    self._prect.x = self._x
+                    self._dragging = False
 
                 if not p1:
-                    self.dragging = False
-        self.image.fill(self.bg_color)
-        pg.draw.rect(self.screen, self.pointer_color, self.prect)
-        if self.pborder_width > 0:
-            pg.draw.rect(self.screen, self.pborder_color, self.prect, self.pborder_width)
+                    self._dragging = False
+        self._image.fill(self.bg_color)
+        pg.draw.rect(self._screen, self.pointer_color, self._prect)
+
+        if self._orientation == "horizontal":
+            self.mark = round(((self._prect.x - self._x) / self._length) * self.max)
+        elif self._orientation == "vertical":
+            self.mark = round(((self._prect.y - self._y) / self._length) * self.max)
+
+        if self.pointer_border_width > 0:
+            pg.draw.rect(self._screen, self.pointer_border_color, self._prect, self.pointer_border_width)
+
         if self.border_width > 0:
-            pg.draw.rect(self.screen, self.border_color, self.rect, self.border_width)
-        if self.text.strip() != "":
-            if self.text_side == "top":
-                if self.text_align == "left":
-                    self.screen.blit(self.label, (self.rect.x, self.rect.y - self.font_size - 10))
-                elif self.text_align == "center":
-                    self.screen.blit(self.label, (
-                        self.rect.centerx - self.label.get_rect().width / 2, self.rect.y - self.font_size - 10))
-                elif self.text_align == "right":
-                    self.screen.blit(self.label, (
-                        self.rect.x + self.rect.width - self.label.get_rect().width, self.rect.y - self.font_size - 10))
-            if self.text_side == "bottom":
-                if self.text_align == "left":
-                    self.screen.blit(self.label, (self.rect.x, self.rect.y + self.rect.height + 10))
-                elif self.text_align == "center":
-                    self.screen.blit(self.label, (
-                        self.rect.centerx - self.label.get_rect().width / 2, self.rect.y + self.rect.height + 10))
-                elif self.text_align == "right":
-                    self.screen.blit(self.label, (
-                        self.rect.x + self.rect.width - self.label.get_rect().width, self.rect.y + self.rect.height + 10))
-            if self.text_side == "left":
-                self.screen.blit(self.label, (self.rect.x - self.label.get_rect().width - 10,
-                                              self.rect.y + self.rect.height - self.label.get_rect().height))
-            if self.text_side == "right":
-                self.screen.blit(self.label, (
-                    self.rect.x + self.rect.width + 10, self.rect.y + self.rect.height - self.label.get_rect().height))
+            pg.draw.rect(self._screen, self.border_color, self._rect, self.border_width)
 
-    def get_mark(self):
-        """
-        #### Description
-        Return the value marked by the slider
-
-        #### Parameters
-        None
-
-        #### Returns
-        `int`
-
-        #### Usage
-        `Slider.get_mark()`
-        """
-        if self.orientation == "horizontal":
-            mark = ((self.prect.x - self.x) / self.length) * self.max
-            return round(mark)
-        elif self.orientation == "vertical":
-            mark = ((self.prect.y - self.y) / self.length) * self.max
-            return round(mark)
-
-    def set_border_width(self, width):
-        """
-        #### Description
-        Set the width of the border around the widget.
-        Set to 0 to remove the border entirely.
-
-        #### Parameters
-        width: int
-        Width in pixels of the border
-
-        #### Returns
-        None
-
-        #### Usage
-        Slider.set_border_width(5)
-
-        ---
-
-        """
-        self.border_width = width
-
-    def set_border_color(self, color):
-        """
-        #### Description
-        Set the color of the border around the widget.
-
-        #### Parameters
-        `color: tuple`
-        A 3-tuple containing an RGB value
-
-        #### Returns
-        None
-
-        #### Usage
-        `Slider.set_border_color((34,45,18))`
-
-        ---
-
-        """
-        self.border_color = color
-
-    def set_pointer_color(self, color):
-        """
-        #### Description
-        Set the color of the selector/pointer.
-
-        #### Parameters
-        `color: tuple`
-        A 3-tuple containing an RGB value
-
-        #### Returns
-        None
-
-        #### Usage
-        `Slider.set_pointer_color((34,45,18))`
-
-        ---
-
-        """
-        self.pointer_color = color
-
-    def set_pointer_border_color(self, color):
-        """
-        #### Description
-        Set the border color of the selector/pointer.
-
-        #### Parameters
-        `color: tuple`
-        A 3-tuple containing an RGB value
-
-        #### Returns
-        None
-
-        #### Usage
-        `Slider.set_pointer_border_color((34,45,18))`
-
-        ---
-
-        """
-        self.pborder_color = color
-
-    def set_pointer_border_width(self, width):
-        """
-        #### Description
-        Set the border width of the selector/pointer.
-
-        #### Parameters
-        `width: int`
-        The width of the border in pixels
-
-        #### Returns
-        None
-
-        #### Usage
-        `Slider.set_pointer_border_width(2)`
-
-        ---
-
-        """
-        self.pborder_width = width
-
-    def set_bg_color(self, color):
-        """
-        #### Description
-        Set the color of the widget's background.
-
-        #### Parameters
-        `color: tuple`
-        A 3-tuple containing an RGB value
-
-        #### Returns
-        None
-
-        #### Usage
-        `Slider.set_bg_color((34,45,18))`
-
-        ---
-
-        """
-        self.bg_color = color
+        if self._text.strip() != "":
+            if self._text_side == "top":
+                if self._text_align == "left":
+                    self._screen.blit(self._label, (self._rect.x, self._rect.y - self._font_size - 10))
+                elif self._text_align == "center":
+                    self._screen.blit(self._label, (
+                        self._rect.centerx - self._label.get_rect().width / 2, self._rect.y - self._font_size - 10))
+                elif self._text_align == "right":
+                    self._screen.blit(self._label, (
+                        self._rect.x + self._rect.width - self._label.get_rect().width, self._rect.y - self._font_size - 10))
+            if self._text_side == "bottom":
+                if self._text_align == "left":
+                    self._screen.blit(self._label, (self._rect.x, self._rect.y + self._rect.height + 10))
+                elif self._text_align == "center":
+                    self._screen.blit(self._label, (
+                        self._rect.centerx - self._label.get_rect().width / 2, self._rect.y + self._rect.height + 10))
+                elif self._text_align == "right":
+                    self._screen.blit(self._label, (
+                        self._rect.x + self._rect.width - self._label.get_rect().width, self._rect.y + self._rect.height + 10))
+            if self._text_side == "left":
+                self._screen.blit(self._label, (self._rect.x - self._label.get_rect().width - 10,
+                                                self._rect.y + self._rect.height - self._label.get_rect().height))
+            if self._text_side == "right":
+                self._screen.blit(self._label, (
+                    self._rect.x + self._rect.width + 10, self._rect.y + self._rect.height - self._label.get_rect().height))
 
     def set_label(self, text):
         """
@@ -302,51 +172,8 @@ class Slider:
         ---
 
         """
-        self.text = text
-        self.label = self.font.render(text, 1, self.font_color)
-
-    def set_label_side(self, side):
-        """
-        #### Description
-        Set the relative position of the label to the widget.
-
-        #### Parameters
-        `side: str`
-        A string from the list ["top", "bottom", "left", "right"]
-
-        #### Returns
-        None
-
-        #### Usage
-        `Slider.set_label_side("top")`
-
-        ---
-
-        """
-        self.text_side = side
-
-    def set_label_alignment(self, alignment):
-        """
-        #### Description
-        Set the alignment of the label when its position is either "top" or "bottom".
-
-        #### Parameters
-        `alignment: str`
-        A string from the list ["left", "center", "right"]
-
-        #### Returns
-        None
-
-        #### Usage
-        `Slider.set_label_side("top")`
-
-        ---
-
-        """
-        if side in ["left", "center", "right"]:
-            self.text_align = alignment
-        else:
-            raise ValueError("Alignment must be either 'left', 'center' or 'right'")
+        self._text = text
+        self._label = self._font.render(text, 1, self._font_color)
 
     def set_font(self, font):
         """
@@ -363,11 +190,11 @@ class Slider:
         #### Usage
         `Slider.set_font("Arial")`
         """
-        self.font_name = font
+        self._font_name = font
         try:
-            self.font = pg.font.Font(font, self.font_size)
+            self._font = pg.font.Font(font, self._font_size)
         except:
-            self.font = pg.font.SysFont(font, self.font_size)
+            self._font = pg.font.SysFont(font, self._font_size)
 
     def set_font_size(self, size=10):
         """
@@ -387,8 +214,8 @@ class Slider:
         ---
 
         """
-        self.font_size = size
-        self.font = pg.font.SysFont(self.font_path, size)
+        self._font_size = size
+        self._font = pg.font.SysFont(self._font_path, size)
 
     def set_font_color(self, color=(0, 0, 0)):
         """
@@ -408,8 +235,8 @@ class Slider:
         ---
 
         """
-        self.font_color = color
-        self.label = self.font.render(self.text, 1, color)
+        self._font_color = color
+        self._label = self._font.render(self._text, 1, color)
 
     def set_width(self, width):
         """
@@ -429,35 +256,16 @@ class Slider:
         ---
 
         """
-        self.width = width
-        if self.orientation == "vertical":
-            self.rect = pg.Rect(self.pos, (self.width, self.size))
-            self.pointer = pg.Surface((self.width, 15)).convert_alpha()
-        elif self.orientation == "horizontal":
-            self.rect = pg.Rect(self.pos, (self.size, self.width))
-            self.pointer = pg.Surface((15, self.width)).convert_alpha()
-        self.image = pg.Surface(self.rect.size).convert_alpha()
-        self.prect = self.pointer.get_rect()
-        self.prect.topleft = self.pos
-
-    def set_max(self, max):
-        """
-        #### Description
-        Set maximum value for the selector
-
-        #### Parameters
-        `max: int`
-
-        #### Returns
-        None
-
-        #### Usage
-        `Slider.set_max(50)`
-
-        ---
-
-        """
-        self.max = max
+        self._width = width
+        if self._orientation == "vertical":
+            self._rect = pg.Rect(self._pos, (self._width, self._size))
+            self._pointer = pg.Surface((self._width, 15)).convert_alpha()
+        elif self._orientation == "horizontal":
+            self._rect = pg.Rect(self._pos, (self._size, self._width))
+            self._pointer = pg.Surface((15, self._width)).convert_alpha()
+        self._image = pg.Surface(self._rect.size).convert_alpha()
+        self._prect = self._pointer.get_rect()
+        self._prect.topleft = self._pos
 
     def set_length(self, length):
         """
@@ -479,15 +287,15 @@ class Slider:
 
         """
 
-        self.length = length
-        self.size = length + 15
-        if self.orientation == "vertical":
-            self.rect = pg.Rect(self.pos, (self.width, self.size))
-            self.pointer = pg.Surface((self.width, 15)).convert_alpha()
-        elif self.orientation == "horizontal":
-            self.rect = pg.Rect(self.pos, (self.size, self.width))
-            self.pointer = pg.Surface((15, self.width)).convert_alpha()
-        self.image = pg.Surface(self.rect.size).convert_alpha()
+        self._length = length
+        self._size = length + 15
+        if self._orientation == "vertical":
+            self._rect = pg.Rect(self._pos, (self._width, self._size))
+            self._pointer = pg.Surface((self._width, 15)).convert_alpha()
+        elif self._orientation == "horizontal":
+            self._rect = pg.Rect(self._pos, (self._size, self._width))
+            self._pointer = pg.Surface((15, self._width)).convert_alpha()
+        self._image = pg.Surface(self._rect.size).convert_alpha()
 
     def move(self, x, y):
         """
@@ -506,8 +314,8 @@ class Slider:
         #### Usage
         `Slider.move(200,300)`
         """
-        self.x = x
-        self.y = y
-        self.pos = (x, y)
-        self.rect.topleft = self.pos
-        self.prect.topleft = self.pos
+        self._x = x
+        self._y = y
+        self._pos = (x, y)
+        self._rect.topleft = self._pos
+        self._prect.topleft = self._pos

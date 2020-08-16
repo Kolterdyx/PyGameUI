@@ -23,23 +23,22 @@ Size (width and height) in pixels.
 
 ---
 
-## Methods
+## Attributes
 
-### `get_state(self)`
-#### Description
-Get the current state of the check box.
-
-#### Parameters
-None
-
-#### Returns
-`bool`
-
-#### Usage
-`CheckBox.get_state()`
+| Attribute        | Description                                          | Type                                   | Content example             |
+| :--------------- | :--------------------------------------------------- | :------------------------------------- | :--------------             |
+|self.bg_color     | RGB color of the background                          |tuple (red: int, green: int, blue: int) |(255,255,255)                |
+|self.border_color | RGB color of the border                              |tuple (red: int, green: int, blue: int) |(255,255,255)                |
+|self.border_width | Width in pixels of the border                        |int                                     |3                            |
+|self.checked			 | If True, the check mark will be displayed            |bool						                         |True   False                 |
+|self.check_color	 | RGB color of the check mark                          |tuple (int, int, int)                   |(255, 255, 255)              |
+|self.check_style	 | Style of the check mark                              |str                  					         |"fill"   "cross"             |
+|self.text_side		 | Side of the widget to display the label              |str		                				         |"top" "left" "right" "bottom"|
+|self.text_align	 | Where to align the label                             |str						                         |"left" "center" "right"      |
 
 ---
 
+## Methods
 ### `move(self, x, y)`
 #### Description
 Change the widget's position.
@@ -56,104 +55,6 @@ None
 
 #### Usage
 `CheckBox.move(200,300)`
-
----
-
-### `set_bg_color(self, color=(255, 255, 255, 255))`
-#### Description
-Set the widget's background color.
-
-#### Parameters
-`color: tuple`   
-A 3-tuple containing an RGB value.
-
-#### Returns
-None
-
-#### Usage
-`CheckBox.set_bg_color((243,75,43))`
-
----
-
-### `set_border_color(self, color)`
-#### Description
-Set the color of the border around the widget.
-
-#### Parameters
-`color: tuple`   
-A 3-tuple containing an RGB value.
-
-#### Returns
-None
-
-#### Usage
-`CheckBox.set_border_color((34,45,18))`
-
----
-
-### `set_border_width(self, width)`
-#### Description
-Set the width of the border around the widget.
-
-#### Parameters
-`width: int`   
-Border width in pixels.
-Set to 0 for no border.
-
-#### Returns
-None
-
-#### Usage
-`CheckBox.set_border_width(5)`
-
----
-
-### `set_check_color(self, color=(0, 200, 0))`
-#### Description
-Set the color of the check mark.
-
-#### Parameters
-`color: tuple`   
-A 3-tuple containing an RGB value.
-
-#### Returns
-None
-
-#### Usage
-`CheckBox.set_check_color((62,43,187))`
-
----
-
-### `set_check_style(self, style='fill')`
-#### Description
-Set the style of the check mark.
-
-#### Parameters
-`style: str`   
-A string that must be either `"fill"` or `"cross"`.
-
-#### Returns
-None
-
-#### Usage
-`CheckBox.set_check_style("cross")`
-
----
-
-### `set_cross_width(self, width)`
-#### Description
-Set the cross lines width.
-This will only take effect if the check style is "cross".
-
-#### Parameters
-`width: int`   
-Line width in pixels.
-
-#### Returns
-None
-
-#### Usage
-`CheckBox.set_cross_width(4)`
 
 ---
 

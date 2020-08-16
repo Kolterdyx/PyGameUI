@@ -29,22 +29,22 @@ The slider selects a number in a range from `0` to `max`
 
 ---
 
-## Methods
-### `get_mark(self)`
-#### Description
-Return the value marked by the slider
+## Attributes
 
-#### Parameters
-None
-
-#### Returns
-`int`
-
-#### Usage
-`Slider.get_mark()`
+| Attribute                | Description                                          | Type                                   | Content example |
+| :---------------         | :--------------------------------------------------- | :------------------------------------- | :-------------- |
+|self.bg_color             | RGB color of the background                          |tuple (red: int, green: int, blue: int) | (255,255,255)   |
+|self.border_color         | RGB color of the border                              |tuple (red: int, green: int, blue: int) | (255,255,255)   |
+|self.border_width         | Width in pixels of the border                        |int                                     | 3               |
+|self.max                  | Maximum value the slider can mark                    |int                                     | 100						 |
+|self.mark                 | The value the slider is marking                      |int                                     | 34 						 |
+|self.pointer_color        | RGB color of the pointer                             |tuple (red: int, green: int, blue: int) | (255,255,255)   |
+|self.pointer_border_color | RGB color of the pointer border                      |tuple (red: int, green: int, blue: int) | (255,255,255)   |
+|self.pointer_border_width | Width in pixels of the pointer border                |int                                     | 3               |
 
 ---
 
+## Methods
 ### `move(self, x, y)`
 #### Description
 Change the widget's position
@@ -60,55 +60,6 @@ None
 
 #### Usage
 `Slider.move(200,300)`
-
----
-
-### `set_bg_color(self, color)`
-#### Description
-Set the color of the widget's background.
-
-#### Parameters
-`color: tuple`
-A 3-tuple containing an RGB value
-
-#### Returns
-None
-
-#### Usage
-`Slider.set_bg_color((34,45,18))`
-
----
-
-### `set_border_color(self, color)`
-#### Description
-Set the color of the border around the widget.
-
-#### Parameters
-`color: tuple`
-A 3-tuple containing an RGB value
-
-#### Returns
-None
-
-#### Usage
-`Slider.set_border_color((34,45,18))`
-
----
-
-### `set_border_width(self, width)`
-#### Description
-Set the width of the border around the widget.
-Set to 0 to remove the border entirely.
-
-#### Parameters
-width: int
-Width in pixels of the border
-
-#### Returns
-None
-
-#### Usage
-Slider.set_border_width(5)
 
 ---
 

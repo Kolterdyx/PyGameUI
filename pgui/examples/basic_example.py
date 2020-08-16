@@ -73,7 +73,7 @@ class Main:
 
         # Create two labels rendering the values of the the checkbox and the slider
         checkbox_label = self.font.render(str(self.checkbox.get_state()), 1, (0, 0, 0))
-        slider_label = self.font.render(str(self.slider.get_mark()), 1, (0, 0, 0))
+        slider_label = self.font.render(str(self.slider.mark), 1, (0, 0, 0))
 
         # Update each widget
         for w in self.widgets:
@@ -86,7 +86,7 @@ class Main:
         # that we can then use to display the label next to the slider pointer
         # (value / max_value ) * new_max_value + offset
         # That offset at the end of the formula is just a padding offset to make sure we are far away from the window's edge
-        slider_label_y = (self.slider.get_mark()/self.slider.max)*self.slider.length+50
+        slider_label_y = (self.slider.mark/self.slider.max)*self.slider.length+50
 
         # Display the slider label
         self.screen.blit(slider_label, (450, slider_label_y))

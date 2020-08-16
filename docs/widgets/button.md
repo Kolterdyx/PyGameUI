@@ -31,15 +31,28 @@ If specified, value to be passed to the function when called.
 
 ---
 
+## Attributes
+
+| Attribute        | Description                                          | Type                                   | Content example |
+| :--------------- | :--------------------------------------------------- | :------------------------------------- | :-------------- |
+|self.bg_color     | RGB color of the background                          |tuple (red: int, green: int, blue: int) |(255,255,255)    |
+|self.border_color | RGB color of the border                              |tuple (red: int, green: int, blue: int) |(255,255,255)    |
+|self.border_width | Width in pixels of the border                        |int                                     |3                |
+|self.func         | Function to execute when the user presses enter      |function or method                      |builtins.sum     |
+|self.valuetopass  | Value to pass to the function self.func              |any                                     |"anythin"        |
+
+---
+
 ## Methods
 ### `move(self, x, y)`
 #### Description
 Change the widget's position
 
 #### Parameters
-`x: int`
+`x: int`   
 Set widget's position along the x axis
-`y: int`
+
+`y: int`   
 Set widget's position along the y axis
 
 #### Returns
@@ -50,61 +63,12 @@ None
 
 ---
 
-### `set_bg_color(self, color)`
-#### Description
-Set the background color of the widget
-
-#### Parameters
-`color: tuple`
-A 3-tuple containing an RGB value
-
-#### Returns
-None
-
-#### Usage
-`Button.set_bg_color((43,63,255))`
-
----
-
-### `set_border_color(self, color)`
-#### Description
-Set the color of the border around the widget
-
-#### Parameters
-`color: tuple`
-A 3-tuple containing an RGB value
-
-#### Returns
-None
-
-#### Usage
-`Button.set_border_color((34,45,18))`
-
----
-
-### `set_border_width(self, width)`
-#### Description
-Set the width of the border around the widget
-
-#### Parameters
-`width: int`
-Border width in pixels.
-Set to 0 for no border
-
-#### Returns
-None
-
-#### Usage
-`Button.set_border_width(5)`
-
----
-
 ### `set_font(self, font)`
 #### Description
 Set the widget's label font.
 
 #### Parameters
-`font: str`
+`font: str`   
 A string containing either a font name or a path to a font file '.ttf' or '.otf'
 
 #### Returns
@@ -121,7 +85,7 @@ None
 Set color of the widget's label font
 
 #### Parameters
-`color: tuple`
+`color: tuple`   
 A 3-tuple containing an RGB value
 
 #### Returns
@@ -132,12 +96,29 @@ None
 
 ---
 
+### `set_font_size(self, size)`
+#### Description
+Set the widget's label font size.
+
+#### Parameters
+`size: int`   
+The size of the font in pixels
+
+#### Returns
+None
+
+#### Usage
+`Button.set_font_size(12)`
+
+---
+
+
 ### `set_label(self, text)`
 #### Description
 Set the widget's label
 
 #### Parameters
-`text: str`
+`text: str`   
 A string with the text to be displayed
 
 #### Returns

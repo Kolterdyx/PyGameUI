@@ -39,36 +39,24 @@ Max length in characters. Set to 0 for no limit.
 
 ---
 
+## Attributes
+
+
+| Attribute        | Description                                          | Type                                   | Content example |
+| :--------------- | :--------------------------------------------------- | :------------------------------------- | :-------------- |
+|self.bg_color     | RGB color of the background                          |tuple (red: int, green: int, blue: int) |(255,255,255)    |
+|self.border_color | RGB color of the border                              |tuple (red: int, green: int, blue: int) |(255,255,255)    |
+|self.border_width | Width in pixels of the border                        |int                                     |3                |
+|self.func         | Function to execute when the user presses enter      |function or method                      |builtins.sum     |
+|self.max_length   | Maximum length of the text in characters             |int                                     |100              |
+|self.offset       | Ammount of pixels to the left to move the text label |int                                     |10               |
+|self.text         | The text typed in the entry                          |str                                     |"A string"       |
+|self.typing       | If true, the keys pressed will be typed in the entry |bool                                    |False            |
+|self.width        | Width in pixels of the widget                        |int                                     |200              |
+
+---
+
 ## Methods
-### `get_offset(self)`
-#### Description
-Get the display offset in pixels of the label in the entry.
-
-#### Parameters
-None
-
-#### Returns
-`int`
-
-#### Usage
-`Entry.get_offset()`
-
----
-
-### `get_text()`
-#### Description
-Return the text typed in the entry.
-
-#### Parameters
-None
-
-#### Returns
-`str`
-
-#### Usage
-`Entry.get_text()`
-
----
 
 ### `move(x, y)`
 #### Description
@@ -82,55 +70,6 @@ Set widget's position along the y axis
 
 #### Usage:
 `Entry.move(200,300)`
-
----
-
-### `set_bg_color(self, color)`
-#### Description
-Set the color of the background to 'color'
-
-#### Parameters
-`color: tuple`   
-A 3-tuple containing an RGB value.
-
-#### Returns
-None
-
-#### Usage
-`Entry.set_bg_color((43,65,24))`
-
----
-
-### `set_border_color(self, color)`
-#### Description
-Set the color of the border around the widget
-
-#### Parameters
-`color: tuple`   
-A 3-tuple containing an RGB value
-
-#### Returns
-None
-
-#### Usage
-`Entry.set_border_color((34,45,18))`
-
----
-
-### `set_border_width(self, width)`
-#### Description
-Set the width of the border around the entry.
-Set to 0 to remove the border entirely.
-
-#### Parameters
-`width: int`   
-Width in pixels of the border
-
-#### Returns
-None
-
-#### Usage
-`Entry.set_border_width(5)`
 
 ---
 
@@ -179,24 +118,6 @@ None
 
 #### Usage
 `Entry.set_font_size(12)`
-
----
-
-### `set_offset(self, offset)`
-
-#### Description
-Set the display offset in pixels of the label in the entry.
-This number of pixels will be substracted from the x position of the label
-
-#### Parameters
-`offset: int`
-Number of pixels to move the label to the left
-
-#### Returns
-None
-
-#### Usage
-`Entry.set_offset(20)`
 
 ---
 

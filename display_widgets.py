@@ -1,10 +1,12 @@
+#!/usr/bin/python3
+# -*- coding: utf-8 -*-
 # @Author: Ciro García <kolterdyx>
 # @Date:   14-Aug-2020
 # @Email:  kolterdev@gmail.com
 # @Project: Pygame GUI
 # @Last modified by:   kolterdyx
-# @Last modified time: 14-Aug-2020
-# @License: This file is subject to the terms and conditions defined in file 'LICENSE.txt',\nwhich is part of this source code package.
+# @Last modified time: 15-Aug-2020
+# @License: This file is subject to the terms and conditions defined in file 'LICENSE', which is part of this source code package.
 
 
 import pygame as pg
@@ -18,7 +20,7 @@ class Screen:
         self.screen = pg.display.set_mode((800, 600))
         self.slider = Slider(self)
         self.button = Button(self)
-        self.entry = Entry(self, w=300)
+        self.entry = Entry(self, width=300)
         self.checkbox = CheckBox(self)
 
         self.button.move(20, 20)

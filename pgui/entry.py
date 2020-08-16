@@ -3,7 +3,7 @@
 # @Email:  kolterdev@gmail.com
 # @Project: Pygame GUI
 # @Last modified by:   kolterdyx
-# @Last modified time: 15-Aug-2020
+# @Last modified time: 16-Aug-2020
 # @License: This file is subject to the terms and conditions defined in file 'LICENSE', which is part of this source code package.
 
 
@@ -93,75 +93,75 @@ class Entry:
 
     """
 
-    def __init__(self, parent, *, x=0, y=0, width=100, size=20, font="Arial", border=0, func=None, max_length=0):
+    def __init__(self, parent, *, x=0, y=0, width=100, size=20, border=0, func=None, max_length=0):
 
         self.parent = parent
-        self.rect = pg.Rect((x, y), (width, size + size / 4))
-        self.image = pg.Surface(self.rect.size).convert_alpha()
-        self.image.fill((255, 255, 255))
-        self.bg_color = (255, 255, 255)
+        self._rect = pg.Rect((x, y), (width, size + size / 4))
+        self._image = pg.Surface(self._rect.size).convert_alpha()
+        self._image.fill((255, 255, 255))
 
+        # ------- ATTRIBUTES -------
         self.width = width
-
-        self.border = pg.Rect((self.rect.x - border + 2, self.rect.y - border + 2),
-                              (width + border, self.rect.height + border))
         self.border_width = border
         self.border_color = (0, 0, 0)
-
-        self.cursor = pg.Surface((size / 10, size)).convert_alpha()
-        self.cursor.fill((0, 0, 0))
-        self.cursor_rect = self.cursor.get_rect()
-        self.cursor_rect.x = self.rect.x + 20
-        self.cursor_rect.y = self.rect.y + 1
-
-        self.c = 0
-        self.cc = 1
-        self.type_cooldown = 0
+        self.bg_color = (255, 255, 255)
+        self.func = func
+        self.max_length = max_length
+        self.typing = False
+        self.offset = 0
         self.text = ''
 
-        self.size = size
-        self.screen = parent.screen
-        self.func = func
+        # --------------------------
 
-        self.font = pg.font.SysFont(font, size)
-        self.font_color = (0, 0, 0)
-        self.font_name = font
-        self.font_size = size
+        self._x = y
+        self._y = y
+        self._pos = (x, y)
 
-        self.label = self.font.render(self.text, 1, self.font_color)
-        self.typing = False
-        self.keypressed = False
-        self.pressing = False
+        self._cursor = pg.Surface((size / 10, size)).convert_alpha()
+        self._cursor.fill((0, 0, 0))
+        self._cursor_rect = self._cursor.get_rect()
 
-        self.max_length = max_length
+        self._c = 0
+        self._cc = 1
+        self._type_cooldown = 0
 
-        self.offset = 0
+        self._font_size = size
+        self._screen = parent.screen
+
+        self._font_name = "Arial"
+        self._font = pg.font.SysFont(font, size)
+        self._font_color = (0, 0, 0)
+        self._font_size = size
+
+        self._label = self._font.render(self.text, 1, self._font_color)
+        self._keypressed = False
+        self._pressing = False
 
     def _add_char(self, char):
-        self.keypressed = True
+        self._keypressed = True
         if self.max_length:
             if len(self.text) < self.max_length:
                 self.text += char
-                self.label = self.font.render(self.text, 1, self.font_color)
         else:
             self.text += char
-            self.label = self.font.render(self.text, 1, self.font_color)
 
     def _remove_char(self):
-        self.keypressed = True
+        self._keypressed = True
         self.text = self.text[:-1]
-        self.label = self.font.render(self.text, 1, self.font_color)
 
     def update(self):
         """Update and display the widget"""
-        if self.c < 100 and self.cc == 1:
-            self.c += self.cc
-            self.cursor.fill(self.font_color)
-        elif self.c > 0 and self.cc == -1:
-            self.c += self.cc
-            self.cursor.fill((0, 0, 0, 0))
+
+        self._label = self._font.render(self.text, 1, self._font_color)
+
+        if self._c < 100 and self._cc == 1:
+            self._c += self._cc
+            self._cursor.fill(self._font_color)
+        elif self._c > 0 and self._cc == -1:
+            self._c += self._cc
+            self._cursor.fill((0, 0, 0, 0))
         else:
-            self.cc *= -1
+            self._cc *= -1
 
         mousepos = pg.mouse.get_pos()
         p1, p2, p3 = pg.mouse.get_pressed()
@@ -171,11 +171,11 @@ class Entry:
         for i in keys:
             count += i
         if count >= 1:
-            self.pressing = True
+            self._pressing = True
         else:
-            self.pressing = False
+            self._pressing = False
 
-        if self.typing and not self.keypressed:
+        if self.typing and not self._keypressed:
             for a in _characters:
                 if keys[a]:
                     self._add_char(_characters[a])
@@ -185,45 +185,45 @@ class Entry:
                 if keys[b] and not (keys[pg.K_LSHIFT] or keys[pg.K_RSHIFT]):
                     self._add_char(_letters[b][0])
             if keys[pg.K_BACKSPACE]:
-                self.keypressed = True
+                self._keypressed = True
                 self._remove_char()
             if keys[pg.K_RETURN]:
-                self.keypressed = True
+                self._keypressed = True
                 if self.func:
                     self.func()
                 else:
                     self.typing = False
 
-        elif self.typing and self.keypressed:
-            if self.type_cooldown >= 30 and self.pressing:
-                self.keypressed = False
-                self.type_cooldown = 0
+        elif self.typing and self._keypressed:
+            if self._type_cooldown >= 30 and self._pressing:
+                self._keypressed = False
+                self._type_cooldown = 0
             else:
-                self.type_cooldown += 1
-        if self.type_cooldown >= 60 and not self.pressing:
-            self.keypressed = False
-            self.type_cooldown = 0
+                self._type_cooldown += 1
+        if self._type_cooldown >= 60 and not self._pressing:
+            self._keypressed = False
+            self._type_cooldown = 0
 
         if p1:
-            if self.rect.collidepoint(mousepos):
+            if self._rect.collidepoint(mousepos):
                 self.typing = True
             else:
                 self.typing = False
 
-        self.label_rect = self.label.get_rect()
-        self.label_rect.x = self.rect.height/20 + self.border_width*2 - self.offset
-        self.label_rect.centery = self.rect.height / 2 + self.rect.height/20
-        self.cursor_rect.x = self.label_rect.width + self.rect.height/20 + self.border_width*2 - self.offset
-        self.cursor_rect.centery = self.rect.height / 2
+        self._label_rect = self._label.get_rect()
+        self._label_rect.x = self._rect.height/20 + self.border_width*2 - self.offset
+        self._label_rect.centery = self._rect.height / 2 + self._rect.height/20
+        self._cursor_rect.x = self._label_rect.width + self._rect.height/20 + self.border_width*2 - self.offset
+        self._cursor_rect.centery = self._rect.height / 2
 
-        self.image.fill(self.bg_color)
+        self._image.fill(self.bg_color)
         if self.typing:
-            self.image.blit(self.cursor, self.cursor_rect)
-        self.image.blit(self.label, self.label_rect)
-        self.screen.blit(self.image, self.rect)
+            self._image.blit(self._cursor, self._cursor_rect)
+        self._image.blit(self._label, self._label_rect)
+        self._screen.blit(self._image, self._rect)
 
         if self.border_width > 0:
-            pg.draw.rect(self.screen, self.border_color, self.rect, self.border_width)
+            pg.draw.rect(self._screen, self.border_color, self._rect, self.border_width)
 
     def clear(self):
         """
@@ -243,35 +243,11 @@ class Entry:
 
         """
         self.text = ""
-        self.label = self.font.render(self.text, 1, self.font_color)
+        self._label = self._font.render(self.text, 1, self._font_color)
 
     def get_label_length(self):
         """Return the length in pixels of the label"""
-        return self.label_rect.width
-
-    def get_text(self):
-        """Return the text typed in the entry."""
-        return self.text
-
-    def set_font_color(self, color):
-        """
-        #### Description
-        Set the color of the text.
-
-        #### Parameters
-        `color: tuple`
-        3-tuple containing an RGB value
-
-        #### Returns
-        None
-
-        #### Usage
-        `Entry.set_font_color((255,30,83))`
-
-        ---
-
-        """
-        self.font_color = color
+        return self._label_rect.width
 
     def set_font(self, font):
         """
@@ -291,11 +267,31 @@ class Entry:
         ---
 
         """
-        self.font_name = font
+        self._font_name = font
         try:
-            self.font = pg.font.Font(font, self.font_size)
+            self._font = pg.font.Font(font, self._font_size)
         except:
-            self.font = pg.font.SysFont(font, self.font_size)
+            self._font = pg.font.SysFont(font, self._font_size)
+
+    def set_font_color(self, color):
+        """
+        #### Description
+        Set the color of the text.
+
+        #### Parameters
+        `color: tuple`
+        3-tuple containing an RGB value
+
+        #### Returns
+        None
+
+        #### Usage
+        `Entry.set_font_color((255,30,83))`
+
+        ---
+
+        """
+        self._font_color = color
 
     def set_font_size(self, size):
         """
@@ -315,123 +311,17 @@ class Entry:
         ---
 
         """
-        self.font_size = size
+        self._font_size = size
         try:
-            self.font = pg.font.SysFont(self.font_name, self.font_size)
+            self._font = pg.font.Font(self._font_name, self._font_size)
         except:
-            self.font = pg.font.Font(self.font_name, self.font_size)
+            self._font = pg.font.SysFont(self._font_name, self._font_size)
 
-        self.rect = pg.Rect(self.pos, (self.width, size + size / 4))
-        self.image = pg.Surface(self.rect.size).convert_alpha()
+        self._rect = pg.Rect(self._pos, (self.width, size + size / 4))
+        self._image = pg.Surface(self._rect.size).convert_alpha()
 
-        self.cursor = pg.Surface((size / 10, size)).convert_alpha()
-        self.cursor_rect = self.cursor.get_rect()
-        self.cursor_rect.x = 20
-        self.cursor_rect.y = 1
-
-    def set_bg_color(self, color):
-        """
-        #### Description
-        Set the color of the background to 'color'
-
-        #### Parameters
-        color: tuple
-        A 3-tuple containing an RGB value.
-
-        #### Returns
-        None
-
-        #### Usage:
-        `Entry.set_bg_color((255,30,83))`
-
-        ---
-
-        """
-        self.bg_color = color
-        self.image.fill(color)
-
-    def set_border_width(self, width):
-        """
-        #### Description
-        Set the width of the border around the widget.
-        Set to 0 to remove the border entirely.
-
-        #### Parameters
-        `width: int`
-        Width in pixels of the border
-
-        #### Returns
-        None
-
-        #### Usage
-        `Entry.set_border_width(5)`
-
-        ---
-
-        """
-        self.border_width = width
-
-    def set_border_color(self, color):
-        """
-        #### Description
-        Set the color of the border around the widget
-
-        #### Parameters
-        `color: tuple`
-        A 3-tuple containing an RGB value
-
-        #### Returns
-        None
-
-        #### Usage:
-        `Entry.set_border_color((34,45,18))`
-
-        ---
-
-        """
-        self.border_color = color
-
-    def set_offset(self, offset):
-        """
-        #### Description
-        Set the display offset in pixels of the label in the entry.
-        This number of pixels will be substracted from the x position of the label
-
-        #### Parameters
-        `offset: int`
-        Number of pixels to move the label to the left
-
-        #### Returns
-        None
-
-        #### Usage
-        `Entry.set_offset(20)`
-
-        ---
-
-        """
-        # Store the offset in a variable
-        self.offset = offset
-
-    def get_offset(self):
-        """
-        #### Description
-        Get the display offset in pixels of the label in the entry.
-
-        #### Parameters
-        None
-
-        #### Returns
-        `int`
-
-        #### Usage
-        `Entry.get_offset()`
-
-        ---
-
-        """
-        # Store the offset in a variable
-        self.offset = offset
+        self._cursor = pg.Surface((size / 10, size)).convert_alpha()
+        self._cursor_rect = self._cursor.get_rect()
 
     def move(self, x, y):
         """
@@ -455,9 +345,7 @@ class Entry:
         ---
 
         """
-        self.x = x
-        self.y = y
-        self.pos = (x, y)
-        self.rect.topleft = self.pos
-        self.border = pg.Rect((self.rect.x - self.border_width + self.border_width/2, self.rect.y - self.border_width + self.border_width/2),
-                              (self.rect.width + self.border_width, self.rect.height + self.border_width))
+        self._x = x
+        self._y = y
+        self._pos = (x, y)
+        self._rect.topleft = self._pos

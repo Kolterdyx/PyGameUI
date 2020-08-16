@@ -62,7 +62,7 @@ class Main:
         self.slider.set_max(self.entry.get_label_length()-self.entry.width+self.entry.font_size)
 
         if self.entry.get_label_length() > self.entry.width:
-            self.entry.set_offset(self.slider.get_mark())
+            self.entry.set_offset(self.slider.mark)
 
         # Update the screen
         pygame.display.flip()
