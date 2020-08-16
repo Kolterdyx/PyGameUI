@@ -4,7 +4,7 @@
 
 ### Usage
 ```python
-Button(parent, *, x=0, y=0, w=100, h=50, func=None, text='Button', font='Arial', font_size=20, valuetopass=None)
+Button(parent, *, x=0, y=0, w=100, h=50, func=None, text='Button', font_size=20, valuetopass=None)
 ```
 
 #### Parameters

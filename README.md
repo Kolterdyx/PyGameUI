@@ -52,7 +52,7 @@ class Main:
     # Define some functions
     def print_text(self):
         # This will print the text typed in the Entry widget
-        print(self.entry.get_text())
+        print(self.entry.text)
 
     def clear(self):
         # This will clear the text in the Entry widget

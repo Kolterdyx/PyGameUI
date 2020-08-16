@@ -45,6 +45,21 @@ The slider selects a number in a range from `0` to `max`
 ---
 
 ## Methods
+### `get_length(self)`
+#### Description
+Return the length of the slider
+
+#### Parameters
+None
+
+#### Returns
+`int`
+
+#### Usage
+`Slider.get_length()`
+
+---
+
 ### `move(self, x, y)`
 #### Description
 Change the widget's position

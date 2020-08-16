@@ -31,14 +31,14 @@ class Main:
 
         # Modify some widget values
         self.button.set_label("Exit")
-        self.button.set_bg_color((255, 50, 50))
-        self.checkbox.set_check_color((255, 0, 0))
-        self.entry.set_border_width(3)
-        self.print_button.set_border_width(3)
-        self.slider.set_border_width(3)
-        self.slider.set_pointer_border_width(3)
+        self.button.bg_color = (255, 50, 50)
+        self.checkbox.check_color = (255, 0, 0)
+        self.entry.border_width = 3
+        self.print_button.border_width = 3
+        self.slider.border_width = 3
+        self.slider.pointer_border_width = 3
 
-        # Move them to the location we want them to be
+        # Move the widgets to the location we want them to be
         self.entry.move(50, 200)
         self.button.move(480, 530)
         self.print_button.move(270, 200)
@@ -48,7 +48,7 @@ class Main:
         self.font = pygame.font.SysFont("Arial", 20)
 
         # This is just a label we will later use to display the text of the entry
-        self.entry_label = self.font.render(self.entry.get_text(), 1, (0, 0, 0))
+        self.entry_label = self.font.render(self.entry.text, 1, (0, 0, 0))
 
         # This is optional but we can but the widgets inside a list so we can
         # then iterate through it to update the widgets
@@ -57,8 +57,8 @@ class Main:
     # Define some functions
     def print_text(self):
         # This will print the text typed in the Entry widget
-        self.entry_label = self.font.render(self.entry.get_text(), 1, (0, 0, 0))
-        print(self.entry.get_text())
+        self.entry_label = self.font.render(self.entry.text, 1, (0, 0, 0))
+        print(self.entry.text)
 
     def clear(self):
         # This will clear the text in the Entry widget
@@ -68,8 +68,8 @@ class Main:
         self.screen.fill((60, 60, 60))
 
         # Create two labels rendering the values of the the checkbox and the slider
-        checkbox_label = self.font.render(str(self.checkbox.get_state()), 1, (0, 0, 0))
-        slider_label = self.font.render(str(self.slider.get_mark()), 1, (0, 0, 0))
+        checkbox_label = self.font.render(str(self.checkbox.checked), 1, (0, 0, 0))
+        slider_label = self.font.render(str(self.slider.mark), 1, (0, 0, 0))
 
         # Update each widget
         for w in self.widgets:
@@ -82,7 +82,7 @@ class Main:
         # that we can then use to display the label next to the slider pointer
         # (value / max_value ) * new_max_value + offset
         # That offset at the end of the formula is just a padding offset to make sure we are far away from the window's edge
-        slider_label_y = (self.slider.get_mark()/self.slider.max)*self.slider.length+50
+        slider_label_y = (self.slider.mark/self.slider.max)*self.slider.get_length()+50
 
         # Display the slider label
         self.screen.blit(slider_label, (450, slider_label_y))
@@ -108,7 +108,6 @@ main = Main()
 while True:
     main.update()
     main.events()
-
 ```
 
 ### Screenshot

@@ -1,6 +1,6 @@
 # Offset an entry's text with a Slider widget
 
-By combining the `Entry.set_offset()` and `Slider.set_max()` methods we can read the part of the text that gets outside the Entry widget
+By combining the `Entry.offset` and `Slider.max` attributes we can read the part of the text that gets outside the Entry widget
 
 ### Code
 
@@ -30,16 +30,16 @@ class Main:
         # Modify some widget values
         self.button.set_label("Exit")
         self.slider.set_label("")
-        self.slider.set_border_width(3)
-        self.slider.set_bg_color((180, 180, 180))
-        self.slider.set_pointer_color((30, 30, 30))
-        self.slider.set_pointer_border_width(3)
-        self.entry.set_border_width(2)
+        self.slider.border_width = 3
+        self.slider.bg_color = (180, 180, 180)
+        self.slider.pointer_color = (30, 30, 30)
+        self.slider.pointer_border_width = 3
+        self.entry.border_width = 2
 
-        # Move them to the location we want them to be
+        # Move the widgets to the location we want them to be
         self.entry.move(50, 50)
         self.slider.move(50, 80)
-        self.button.move(50, 150)
+        self.button.move(480, 530)
 
         # This is optional but we can but the widgets inside a list so we can
         # then iterate through it to update the widgets
@@ -56,10 +56,10 @@ class Main:
         for w in self.widgets:
             w.update()
 
-        self.slider.set_max(self.entry.get_label_length()-self.entry.width+self.entry.font_size)
+        self.slider.max = self.entry.get_label_length() - self.entry.width + self.entry.get_font_size()
 
         if self.entry.get_label_length() > self.entry.width:
-            self.entry.set_offset(self.slider.get_mark())
+            self.entry.offset = self.slider.mark
 
         # Update the screen
         pygame.display.flip()

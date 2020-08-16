@@ -1,4 +1,7 @@
 # ChangeLog
+### 0.0.6.post1
+* Forgot to update the documentation to the new version
+
 ### 0.0.6
 * Fixed a new bug in the entry widget.
 * Fixed two new bugs in the button widget.

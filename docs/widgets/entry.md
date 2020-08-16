@@ -5,7 +5,7 @@ Entry widget for recieving user text input.
 
 ### Usage:
 ```python
-Entry(parent, *, x=0, y=0, w=100, size=20, font='Arial', border=0, func=None, max_length=0)
+Entry(parent, *, x=0, y=0, w=100, size=20, border=0, func=None, max_length=0)
 ```
 
 
@@ -24,9 +24,6 @@ Width of the entry in pixels.
 
 `size: int`  
 Font size in pixels.
-
-`font: str`  
-Font to be used in the entry.
 
 `border: int`  
 Width of the widget's border. Set to 0 to remove the border.
@@ -57,6 +54,20 @@ Max length in characters. Set to 0 for no limit.
 ---
 
 ## Methods
+### `get_font_size`
+#### Description
+Return the size in pixels of the font.
+
+#### Parameters
+None
+
+#### Returns
+`int`
+
+#### Usage
+`Entry.get_font_size()`
+
+---
 
 ### `move(x, y)`
 #### Description
@@ -68,7 +79,10 @@ Set widget's position along the x axis
 `y: int`   
 Set widget's position along the y axis
 
-#### Usage:
+#### Returns
+None
+
+#### Usage
 `Entry.move(200,300)`
 
 ---
