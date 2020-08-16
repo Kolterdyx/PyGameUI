@@ -57,7 +57,7 @@ class Main:
 		self.widgets = [self.entry, self.button]
 
 	def print_text(self):
-		print(self.entry.get_text())
+		print(self.entry.text)
 
 	def update(self):
 		self.screen.fill((60, 60, 60))
