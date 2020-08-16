@@ -1,8 +1,15 @@
 # ChangeLog
+### 0.0.6
+* Fixed a new bug in the entry widget.
+* Fixed two new bugs in the button widget.
+* Added a `get_length()` method to the slider because `_length` shouldn't be directly accessed.
+* Added a `get_font_size()` method to the entry widget because `_font_size` shouldn't be directly accessed
+* Remodeled the examples
+
 ### 0.0.5
-* Fixed bugs in the widget
-* Removed most of the get/set system because it was stupid (kept some setters to manage some modifications in the correct way)
-* Renamed most of the variables to keep track of what is an attribute and what is an implementation
+* Fixed bugs in the entry widget.
+* Removed most of the get/set system because it was stupid (kept some setters to manage some modifications in the correct way).
+* Renamed most of the variables to keep track of what is an attribute and what is an implementation.
 
 ### 0.0.4
 * Fixed another deadly bug in the Button widget
