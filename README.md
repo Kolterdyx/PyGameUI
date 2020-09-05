@@ -71,6 +71,7 @@ class Main:
     # We can use a separate method for event handling
     def events(self):
         for event in pygame.event.get():
+          pass
         # The loop does not need to have anything in it but we
         # can use it however we want
 
