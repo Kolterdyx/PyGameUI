@@ -5,7 +5,7 @@
 # @Email:  kolterdev@gmail.com
 # @Project: Pygame GUI
 # @Last modified by:   kolterdyx
-# @Last modified time: 16-Aug-2020
+# @Last modified time: 21-Aug-2020
 # @License: This file is subject to the terms and conditions defined in file 'LICENSE', which is part of this source code package.
 
 ####################################################################################
@@ -33,11 +33,12 @@ class Main:
         # Modify some widget values
         self.button.set_label("Exit")
         self.slider.set_label("")
-        self.slider.border_width = 3
+        self.slider.border_width = 1
         self.slider.bg_color = (180, 180, 180)
-        self.slider.pointer_color = (30, 30, 30)
-        self.slider.pointer_border_width = 3
-        self.entry.border_width = 2
+        self.slider.pointer_color = (100, 100, 100)
+        self.slider.pointer_border_width = 1
+        self.entry.border_width = 1
+        self.button.border_width = 1
 
         # Move the widgets to the location we want them to be
         self.entry.move(50, 50)
@@ -53,15 +54,15 @@ class Main:
         self.entry.clear()
 
     def update(self):
-        self.screen.fill((60, 60, 60))
+        self.screen.fill((200, 200, 200))
 
         # Update each widget
         for w in self.widgets:
             w.update()
 
-        self.slider.max = self.entry.get_label_length() - self.entry.width + self.entry.get_font_size()
+        self.slider.max = self.entry.get_text_pixel_length() - self.entry.width + self.entry.get_font_size()
 
-        if self.entry.get_label_length() > self.entry.width:
+        if self.entry.get_text_pixel_length() > self.entry.width:
             self.entry.offset = self.slider.mark
 
         # Update the screen

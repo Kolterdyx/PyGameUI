@@ -3,7 +3,7 @@
 # @Email:  kolterdev@gmail.com
 # @Project: Pygame GUI
 # @Last modified by:   kolterdyx
-# @Last modified time: 16-Aug-2020
+# @Last modified time: 20-Aug-2020
 # @License: This file is subject to the terms and conditions defined in file 'LICENSE', which is part of this source code package.
 
 
@@ -35,7 +35,8 @@ _letters = {
     pg.K_w: ['w', 'W'],
     pg.K_x: ['x', 'X'],
     pg.K_y: ['y', 'Y'],
-    pg.K_z: ['z', 'Z'],
+    pg.K_z: ['z', 'Z']
+
 }
 
 _characters = {
@@ -50,6 +51,7 @@ _characters = {
     pg.K_7: '7',
     pg.K_8: '8',
     pg.K_9: '9',
+    pg.K_COMMA: ','
 }
 
 
@@ -110,6 +112,9 @@ class Entry:
         self.typing = False
         self.offset = 0
         self.text = ''
+        self.label_side = "top"
+        self.label_align = "left"
+        self.label_padding = 3
         # --------------------------
 
         self._x = y
@@ -133,6 +138,8 @@ class Entry:
         self._font = pg.font.SysFont(self._font_name, self._font_size)
 
         self._label = self._font.render(self.text, 1, self._font_color)
+        self._ltext = ""
+        self._tlabel = self._font.render(self._ltext, 1, self._font_color)
         self._keypressed = False
         self._pressing = False
 
@@ -148,8 +155,49 @@ class Entry:
         self._keypressed = True
         self.text = self.text[:-1]
 
+    def _check_attributes(self):
+        if type(self.bg_color) != tuple:
+            raise TypeError(".bg_color must be a tuple, not", type(self.bg_color))
+        elif len(self.bg_color) != 3:
+            raise ValueError("Expected 3 values, got,", len(self.bg_color))
+        else:
+            for i, n in enumerate(self.bg_color):
+                if type(n) != int:
+                    raise ValueError(f"Got type {type(n)} at index {i} instead of int.")
+
+        if type(self.border_width) != int:
+            raise TypeError(".border_width must be an integer, not", type(self.border_width))
+        elif self.border_width < 0:
+            raise ValueError(".border_width must be equal or greater than 0.")
+
+        if type(self.border_color) != tuple:
+            raise TypeError(".border_color must be a tuple, not", type(self.border_color))
+        elif len(self.border_color) != 3:
+            raise ValueError("Expected 3 values, got,", len(self.bg_color))
+        else:
+            for i, n in enumerate(self.border_color):
+                if type(n) != int:
+                    raise ValueError(f"Got type {type(n)} at index {i} instead of int.")
+
+        if type(self.label_side) != str:
+            raise TypeError(".text_side must be a string, not", type(self.label_side))
+        elif self.label_side not in ["top", "left", "right", "bottom"]:
+            raise ValueError(".text_side must be in ['top', 'left', 'right', 'bottom']")
+
+        if type(self.label_align) != str:
+            raise TypeError(".text_align must be a string, not", type(self.label_align))
+        elif self.label_align not in ["left", "center", "right"]:
+            raise ValueError(".text_align must be in ['left', 'center', 'right']")
+
+        if type(self.label_padding) != int:
+            raise TypeError(".label_padding must be an integer, not", type(self.label_padding))
+        elif self.label_padding < 0:
+            raise ValueError(".label_padding must be equal or greater than 0.")
+
     def update(self):
         """Update and display the widget"""
+
+        self._check_attributes()
 
         self._label = self._font.render(self.text, 1, self._font_color)
 
@@ -218,11 +266,41 @@ class Entry:
         self._image.fill(self.bg_color)
         if self.typing:
             self._image.blit(self._cursor, self._cursor_rect)
+        if self._ltext.strip() != "":
+            self._screen.blit(self._tlabel, (self._rect.x, self._rect.y-self._tlabel.get_rect().height-3))
         self._image.blit(self._label, self._label_rect)
         self._screen.blit(self._image, self._rect)
 
         if self.border_width > 0:
             pg.draw.rect(self._screen, self.border_color, self._rect, self.border_width)
+
+        # change label pos
+        if self._ltext.strip() != "":
+            if self.label_side == "top":
+                if self.label_align == "left":
+                    self._screen.blit(self._label, (self._rect.x, self._rect.y - self._font_size - self.label_padding))
+                elif self.label_align == "center":
+                    self._screen.blit(self._label, (
+                        self._rect.centerx - self._label_rect.width / 2, self._rect.y - self._font_size - self.label_padding))
+                elif self.label_align == "right":
+                    self._screen.blit(self._label, (
+                        self._rect.x + self._rect.width - self._label_rect.width, self._rect.y - self._font_size - self.label_padding))
+            if self.label_side == "bottom":
+                if self.label_align == "left":
+                    self._screen.blit(self._label, (self._rect.x, self._rect.y +
+                                                    self._rect.height + self.label_padding))
+                elif self.label_align == "center":
+                    self._screen.blit(self._label, (
+                        self._rect.centerx - self._label_rect.width / 2, self._rect.y + self._rect.height + self.label_padding))
+                elif self.label_align == "right":
+                    self._screen.blit(self._label, (
+                        self._rect.x + self._rect.width - self._label_rect.width, self._rect.y + self._rect.height + self.label_padding))
+            if self.label_side == "left":
+                self._screen.blit(self._label, (self._rect.x - self._label_rect.width - self.label_padding,
+                                                self._rect.y + self._rect.height - self._label_rect.height))
+            if self.label_side == "right":
+                self._screen.blit(self._label, (self._rect.x + self._rect.width + self.label_padding,
+                                                self._rect.y + self._rect.height - self._label_rect.height))
 
     def clear(self):
         """
@@ -247,9 +325,33 @@ class Entry:
     def get_font_size(self):
         return self._font_size
 
-    def get_label_length(self):
-        """Return the length in pixels of the label"""
+    def get_text_pixel_length(self):
+        """Return the length in pixels of the text"""
         return self._label_rect.width
+
+    def set_label(self, text):
+        """
+        #### Description
+        Set the label of the widget.
+
+        #### Parameters
+        `text: str`
+        A string containing the text to be displayed.
+
+        #### Returns
+        None
+
+        #### Usage
+        `Entry.set_text("This is a check box")`
+
+        ---
+
+        """
+        if type(text) == str:
+            self._ltext = text
+            self._tlabel = self._font.render(self._ltext, 1, self._font_color)
+        else:
+            raise TypeError("text must be a string, not", type(text))
 
     def set_font(self, font):
         """
@@ -269,11 +371,15 @@ class Entry:
         ---
 
         """
-        self._font_name = font
-        try:
-            self._font = pg.font.Font(font, self._font_size)
-        except:
-            self._font = pg.font.SysFont(font, self._font_size)
+        if type(font) == str:
+            self._font_name = font
+            try:
+                self._font = pg.font.Font(font, self._font_size)
+            except FileNotFoundError:
+                self._font = pg.font.SysFont(font, self._font_size)
+            self._label = self._font.render(self.text, 1, self._font_color)
+        else:
+            raise TypeError("font must be a string, not", type(font))
 
     def set_font_color(self, color):
         """
@@ -293,7 +399,20 @@ class Entry:
         ---
 
         """
-        self._font_color = color
+        if type(color) == tuple:
+            if len(color) != 3:
+                for i, n in enumerate(color):
+                    if type(n) == int:
+                        continue
+                    else:
+                        raise TypeError(f"Got type {type(n)} at index {i} instead of int.")
+                # Change the font color and re-render the label
+                self._font_color = color
+                self._label = self._font.render(self.text, 1, color)
+            else:
+                raise ValueError("Expected 3 values, got", len(color))
+        else:
+            raise TypeError("color must be a tuple, not", type(color))
 
     def set_font_size(self, size):
         """
@@ -313,17 +432,25 @@ class Entry:
         ---
 
         """
-        self._font_size = size
-        try:
-            self._font = pg.font.Font(self._font_name, self._font_size)
-        except:
-            self._font = pg.font.SysFont(self._font_name, self._font_size)
+        if type(size) == int:
+            try:
+                self._font = pg.font.Font(self._font_name, size)
+
+            # If it is installed in the system, use the system one
+            except FileNotFoundError:
+                self._font = pg.font.SysFont(self._font_name, size)
+                # Store the font size in a variable
+                self._font_size = size
+            self._label = self._font.render(self.text, 1, self._font_color)
+        else:
+            raise TypeError(f"size must be an integer, not {type(size)}")
 
         self._rect = pg.Rect(self._pos, (self.width, size + size / 4))
         self._image = pg.Surface(self._rect.size).convert_alpha()
 
         self._cursor = pg.Surface((size / 10, size)).convert_alpha()
         self._cursor_rect = self._cursor.get_rect()
+        self._label = self._font.render(self.text, 1, self._font_color)
 
     def move(self, x, y):
         """
@@ -347,6 +474,10 @@ class Entry:
         ---
 
         """
+        if type(x) != int:
+            raise TypeError(f"x must be an integer, not {type(x)}")
+        if type(y) != int:
+            raise TypeError(f"y must be an integer, not {type(y)}")
         self._x = x
         self._y = y
         self._pos = (x, y)

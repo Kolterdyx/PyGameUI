@@ -39,17 +39,20 @@ Max length in characters. Set to 0 for no limit.
 ## Attributes
 
 
-| Attribute        | Description                                          | Type                                   | Content example |
-| :--------------- | :--------------------------------------------------- | :------------------------------------- | :-------------- |
-|self.bg_color     | RGB color of the background                          |tuple (red: int, green: int, blue: int) |(255,255,255)    |
-|self.border_color | RGB color of the border                              |tuple (red: int, green: int, blue: int) |(255,255,255)    |
-|self.border_width | Width in pixels of the border                        |int                                     |3                |
-|self.func         | Function to execute when the user presses enter      |function or method                      |builtins.sum     |
-|self.max_length   | Maximum length of the text in characters             |int                                     |100              |
-|self.offset       | Ammount of pixels to the left to move the text label |int                                     |10               |
-|self.text         | The text typed in the entry                          |str                                     |"A string"       |
-|self.typing       | If true, the keys pressed will be typed in the entry |bool                                    |False            |
-|self.width        | Width in pixels of the widget                        |int                                     |200              |
+| Attribute        | Description                                          | Type                                   | Content example             |
+| :--------------- | :--------------------------------------------------- | :------------------------------------- | :-------------------------- |
+|self.bg_color     | RGB color of the background                          |tuple (red: int, green: int, blue: int) |(255,255,255)                |
+|self.border_color | RGB color of the border                              |tuple (red: int, green: int, blue: int) |(255,255,255)                |
+|self.border_width | Width in pixels of the border                        |int                                     |3                            |
+|self.func         | Function to execute when the user presses enter      |function or method                      |builtins.sum                 |
+|self.label_align	 | Where to align the label                             |str						                         |"left" "center" "right"      |
+|self.label_padding| Distance in pixels between the label and the widget  |int                                     | 3                           |
+|self.label_side   | Side of the widget to display the label              |str		                				         |"top" "left" "right" "bottom"|
+|self.max_length   | Maximum length of the text in characters             |int                                     |100                          |
+|self.offset       | Ammount of pixels to the left to move the text label |int                                     |10                           |
+|self.text         | The text typed in the entry                          |str                                     |"A string"                   |
+|self.typing       | If true, the keys pressed will be typed in the entry |bool                                    |False                        |
+|self.width        | Width in pixels of the widget                        |int                                     |200                          |
 
 ---
 

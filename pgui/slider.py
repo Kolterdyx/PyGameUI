@@ -3,7 +3,7 @@
 # @Email:  kolterdev@gmail.com
 # @Project: Pygame GUI
 # @Last modified by:   kolterdyx
-# @Last modified time: 16-Aug-2020
+# @Last modified time: 18-Aug-2020
 # @License: This file is subject to the terms and conditions defined in file 'LICENSE', which is part of this source code package.
 
 
@@ -39,6 +39,9 @@ class Slider:
         self.pointer_border_color = (0, 0, 0)
         self.pointer_border_width = 0
         self.bg_color = (255, 255, 255)
+        self.label_padding = 3
+        self.label_side = "top"
+        self.label_align = "left"
         # --------------------------
 
         if self._orientation == "vertical":
@@ -58,8 +61,6 @@ class Slider:
         self._prect.topleft = self._rect.topleft
 
         self._text = ""
-        self._text_side = "top"
-        self._text_align = "left"
         self._font_size = 20
         self._font_color = (0, 0, 0)
         self._font = pg.font.SysFont("Arial", self._font_size)
@@ -129,30 +130,31 @@ class Slider:
             pg.draw.rect(self._screen, self.border_color, self._rect, self.border_width)
 
         if self._text.strip() != "":
-            if self._text_side == "top":
-                if self._text_align == "left":
-                    self._screen.blit(self._label, (self._rect.x, self._rect.y - self._font_size - 10))
-                elif self._text_align == "center":
+            if self.label_side == "top":
+                if self.label_align == "left":
+                    self._screen.blit(self._label, (self._rect.x, self._rect.y - self._font_size - self.label_padding))
+                elif self.label_align == "center":
                     self._screen.blit(self._label, (
-                        self._rect.centerx - self._label.get_rect().width / 2, self._rect.y - self._font_size - 10))
-                elif self._text_align == "right":
+                        self._rect.centerx - self._label.get_rect().width / 2, self._rect.y - self._font_size - self.label_padding))
+                elif self.label_align == "right":
                     self._screen.blit(self._label, (
-                        self._rect.x + self._rect.width - self._label.get_rect().width, self._rect.y - self._font_size - 10))
-            if self._text_side == "bottom":
-                if self._text_align == "left":
-                    self._screen.blit(self._label, (self._rect.x, self._rect.y + self._rect.height + 10))
-                elif self._text_align == "center":
+                        self._rect.x + self._rect.width - self._label.get_rect().width, self._rect.y - self._font_size - self.label_padding))
+            if self.label_side == "bottom":
+                if self.label_align == "left":
+                    self._screen.blit(self._label, (self._rect.x, self._rect.y +
+                                                    self._rect.height + self.label_padding))
+                elif self.label_align == "center":
                     self._screen.blit(self._label, (
-                        self._rect.centerx - self._label.get_rect().width / 2, self._rect.y + self._rect.height + 10))
-                elif self._text_align == "right":
+                        self._rect.centerx - self._label.get_rect().width / 2, self._rect.y + self._rect.height + self.label_padding))
+                elif self.label_align == "right":
                     self._screen.blit(self._label, (
-                        self._rect.x + self._rect.width - self._label.get_rect().width, self._rect.y + self._rect.height + 10))
-            if self._text_side == "left":
-                self._screen.blit(self._label, (self._rect.x - self._label.get_rect().width - 10,
+                        self._rect.x + self._rect.width - self._label.get_rect().width, self._rect.y + self._rect.height + self.label_padding))
+            if self.label_side == "left":
+                self._screen.blit(self._label, (self._rect.x - self._label.get_rect().width - self.label_padding,
                                                 self._rect.y + self._rect.height - self._label.get_rect().height))
-            if self._text_side == "right":
-                self._screen.blit(self._label, (
-                    self._rect.x + self._rect.width + 10, self._rect.y + self._rect.height - self._label.get_rect().height))
+            if self.label_side == "right":
+                self._screen.blit(self._label, (self._rect.x + self._rect.width + self.label_padding,
+                                                self._rect.y + self._rect.height - self._label.get_rect().height))
 
     def set_label(self, text):
         """
@@ -176,7 +178,7 @@ class Slider:
         self._label = self._font.render(text, 1, self._font_color)
 
     def set_mark(self, mark):
-        if mark not in range(0, self.max):
+        if mark not in range(0, self.max+1):
             raise ValueError("int out of range.")
         else:
             self.mark = mark
@@ -206,7 +208,7 @@ class Slider:
         except:
             self._font = pg.font.SysFont(font, self._font_size)
 
-    def set_font_size(self, size=10):
+    def set_font_size(self, size):
         """
         #### Description
         Set the size of the widget's label font.
@@ -224,10 +226,20 @@ class Slider:
         ---
 
         """
-        self._font_size = size
-        self._font = pg.font.SysFont(self._font_path, size)
+        if type(size) == int:
+            try:
+                self._font = pg.font.Font(self._font_name, size)
 
-    def set_font_color(self, color=(0, 0, 0)):
+            # If it is installed in the system, use the system one
+            except FileNotFoundError:
+                self._font = pg.font.SysFont(self._font_name, size)
+                # Store the font size in a variable
+                self._font_size = size
+            self._label = self._font.render(self._text, 1, self._font_color)
+        else:
+            raise TypeError(f"size must be an integer, not {type(size)}")
+
+    def set_font_color(self, color):
         """
         #### Description
         Set the color of the widget's label.
@@ -245,8 +257,20 @@ class Slider:
         ---
 
         """
-        self._font_color = color
-        self._label = self._font.render(self._text, 1, color)
+        if type(color) == tuple:
+            if len(color) != 3:
+                for i, n in enumerate(color):
+                    if type(n) == int:
+                        continue
+                    else:
+                        raise TypeError(f"Got type {type(n)} at index {i} instead of int.")
+                # Change the font color and re-render the label
+                self._font_color = color
+                self._label = self._font.render(self._text, 1, color)
+            else:
+                raise ValueError("Expected 3 values, got", len(color))
+        else:
+            raise TypeError("color must be a tuple, not", type(color))
 
     def set_width(self, width):
         """
@@ -343,6 +367,10 @@ class Slider:
         #### Usage
         `Slider.move(200,300)`
         """
+        if type(x) != int:
+            raise TypeError(f"x must be an integer, not {type(x)}")
+        if type(y) != int:
+            raise TypeError(f"y must be an integer, not {type(y)}")
         self._x = x
         self._y = y
         self._pos = (x, y)

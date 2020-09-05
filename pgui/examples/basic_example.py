@@ -5,7 +5,7 @@
 # @Email:  kolterdev@gmail.com
 # @Project: Pygame GUI
 # @Last modified by:   kolterdyx
-# @Last modified time: 16-Aug-2020
+# @Last modified time: 21-Aug-2020
 # @License: This file is subject to the terms and conditions defined in file 'LICENSE', which is part of this source code package.
 
 
@@ -37,10 +37,12 @@ class Main:
         self.button.set_label("Exit")
         self.button.bg_color = (255, 50, 50)
         self.checkbox.check_color = (255, 0, 0)
-        self.entry.border_width = 3
-        self.print_button.border_width = 3
-        self.slider.border_width = 3
-        self.slider.pointer_border_width = 3
+        self.entry.border_width = 1
+        self.print_button.border_width = 1
+        self.checkbox.border_width = 1
+        self.button.border_width = 1
+        self.slider.border_width = 1
+        self.slider.pointer_border_width = 1
 
         # Move the widgets to the location we want them to be
         self.entry.move(50, 200)
@@ -69,7 +71,7 @@ class Main:
         self.entry.clear()
 
     def update(self):
-        self.screen.fill((60, 60, 60))
+        self.screen.fill((200, 200, 200))
 
         # Create two labels rendering the values of the the checkbox and the slider
         checkbox_label = self.font.render(str(self.checkbox.checked), 1, (0, 0, 0))

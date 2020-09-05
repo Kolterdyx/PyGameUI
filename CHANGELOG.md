@@ -1,4 +1,11 @@
 # ChangeLog
+### 0.0.8
+* Fixed some bugs in the Slider.
+* Added attribute `self.label_padding` to all widgets with an external label.
+* Made attribute `self._clicked` "public" (now it is `self.clicked`) for the checkBox.
+* Added a label to the Entry.
+* Added exceptions.
+
 ### 0.0.7.post2
 * Another bug.
 

@@ -26,15 +26,16 @@ Size (width and height) in pixels.
 ## Attributes
 
 | Attribute        | Description                                          | Type                                   | Content example             |
-| :--------------- | :--------------------------------------------------- | :------------------------------------- | :--------------             |
+| :--------------- | :--------------------------------------------------- | :------------------------------------- | :-------------------------- |
 |self.bg_color     | RGB color of the background                          |tuple (red: int, green: int, blue: int) |(255,255,255)                |
 |self.border_color | RGB color of the border                              |tuple (red: int, green: int, blue: int) |(255,255,255)                |
 |self.border_width | Width in pixels of the border                        |int                                     |3                            |
 |self.checked			 | If True, the check mark will be displayed            |bool						                         |True   False                 |
 |self.check_color	 | RGB color of the check mark                          |tuple (int, int, int)                   |(255, 255, 255)              |
 |self.check_style	 | Style of the check mark                              |str                  					         |"fill"   "cross"             |
-|self.text_side		 | Side of the widget to display the label              |str		                				         |"top" "left" "right" "bottom"|
-|self.text_align	 | Where to align the label                             |str						                         |"left" "center" "right"      |
+|self.label_align	 | Where to align the label                             |str						                         |"left" "center" "right"      |
+|self.label_padding| Distance in pixels between the label and the widget  |int                                     | 3                           |
+|self.label_side   | Side of the widget to display the label              |str		                				         |"top" "left" "right" "bottom"|
 
 ---
 

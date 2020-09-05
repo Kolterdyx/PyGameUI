@@ -1,9 +1,8 @@
 # @Author: Ciro García <kolterdyx>
 # @Date:   14-Aug-2020
 # @Email:  kolterdev@gmail.com
-# @Project: Pygame GUI
 # @Last modified by:   kolterdyx
-# @Last modified time: 16-Aug-2020
+# @Last modified time: 20-Aug-2020
 # @License: This file is subject to the terms and conditions defined in file 'LICENSE', which is part of this source code package.
 
 
@@ -62,10 +61,12 @@ class CheckBox:
         # Set the default box style and check style
         self.check_style = "fill"
         # Set the default side for the text
-        self.text_side = "top"
+        self.label_side = "top"
         # Set the default alignment of the text
-        self.text_align = "left"
+        self.label_align = "left"
+        self.label_padding = 3
         # --------------------------
+        self._sq_border_width = self.border_width
 
         # Create a surface with the specified size. This will be the background
         self._image = pg.Surface((size, size)).convert_alpha()  # Convert to alpha so it supports transparency
@@ -82,8 +83,8 @@ class CheckBox:
 
         self._style = "square"
 
-        # self._clicked will be True whenever the primary mouse button is pressed over the widget
-        self._clicked = False
+        # self.clicked will be True whenever the primary mouse button is pressed over the widget
+        self.clicked = False
 
         # Set the default text
         self._text = ""
@@ -96,6 +97,67 @@ class CheckBox:
         # Create a label rendering the text with the specified font
         self._label = self._font.render(self._text, 1, self._font_color)
 
+    def _check_attributes(self):
+        if type(self.bg_color) != tuple:
+            raise TypeError(".bg_color must be a tuple, not", type(self.bg_color))
+        elif len(self.bg_color) != 3:
+            raise ValueError("Expected 3 values, got,", len(self.bg_color))
+        else:
+            for i, n in enumerate(self.bg_color):
+                if type(n) != int:
+                    raise ValueError(f"Got type {type(n)} at index {i} instead of int.")
+
+        if type(self.border_width) != int:
+            raise TypeError(".border_width must be an integer, not", type(self.border_width))
+        elif self.border_width < 0:
+            raise ValueError(".border_width must be equal or greater than 0.")
+
+        if type(self.border_color) != tuple:
+            raise TypeError(".border_color must be a tuple, not", type(self.border_color))
+        elif len(self.border_color) != 3:
+            raise ValueError("Expected 3 values, got,", len(self.bg_color))
+        else:
+            for i, n in enumerate(self.border_color):
+                if type(n) != int:
+                    raise ValueError(f"Got type {type(n)} at index {i} instead of int.")
+
+        if type(self.check_color) != tuple:
+            raise TypeError(".check_color must be a tuple, not", type(self.check_color))
+        elif len(self.check_color) != 3:
+            raise ValueError("Expected 3 values, got,", len(self.check_color))
+        else:
+            for i, n in enumerate(self.check_color):
+                if type(n) != int:
+                    raise ValueError(f"Got type {type(n)} at index {i} instead of int.")
+
+        if type(self.cross_width) != int:
+            raise TypeError(".cross_width must be an integer, not", type(self.cross_width))
+        elif self.cross_width < 0:
+            raise ValueError(".cross_width must be equal or greater than 0.")
+
+        if type(self.checked) != bool:
+            raise TypeError(".checked must be a bool, not", type(self.checked))
+
+        if type(self.check_style) != str:
+            raise TypeError(".check_style must be a string, not", type(self.check_style))
+        elif self.check_style not in ["fill", "cross"]:
+            raise ValueError(".check_style must be either \"fill\" or \"cross\"")
+
+        if type(self.label_side) != str:
+            raise TypeError(".text_side must be a string, not", type(self.label_side))
+        elif self.label_side not in ["top", "left", "right", "bottom"]:
+            raise ValueError(".text_side must be in ['top', 'left', 'right', 'bottom']")
+
+        if type(self.label_align) != str:
+            raise TypeError(".text_align must be a string, not", type(self.label_align))
+        elif self.label_align not in ["left", "center", "right"]:
+            raise ValueError(".text_align must be in ['left', 'center', 'right']")
+
+        if type(self.label_padding) != int:
+            raise TypeError(".label_padding must be an integer, not", type(self.label_padding))
+        elif self.label_padding < 0:
+            raise ValueError(".label_padding must be equal or greater than 0.")
+
     def update(self):
         """
         #### Description
@@ -105,8 +167,7 @@ class CheckBox:
         `CheckBox.update()`
         """
 
-        self._pos = (self._x, self._y)
-        self._x, self._y = self._pos
+        self._check_attributes()
 
         # Detect mouse position and button presses
         # mousepos is a tuple of this format (x, y)
@@ -116,7 +177,7 @@ class CheckBox:
 
         # Detect if the widget is being clicked
         if self._rect.collidepoint(mousepos) and p1:
-            self._clicked = True
+            self.clicked = True
 
         # Fill the background with the background color
         self._image.fill(self.bg_color)
@@ -129,9 +190,9 @@ class CheckBox:
         else:
             raise ValueError("Style must be either \"square\" or \"circle\".")
         # Swap the value of self.checked whenever the box is released from the mouse
-        if self._clicked and not p1:
+        if self.clicked and not p1:
             self.checked = not self.checked
-            self._clicked = False
+            self.clicked = False
 
         # Display the check mark if the box is checked depending on the style
         if self.checked:
@@ -154,41 +215,42 @@ class CheckBox:
         # Stripping the string will avoid drawing the label if the string contains only invisible characters
         if self._text.strip() != "":
             # Display the label on top of the box
-            if self.text_side == "top":
+            if self.label_side == "top":
                 # Align the label to the left
-                if self.text_align == "left":
-                    self._screen.blit(self._label, (self._rect.x, self._rect.y - self._font_size - 10))
+                if self.label_align == "left":
+                    self._screen.blit(self._label, (self._rect.x, self._rect.y - self._font_size - self.label_padding))
                 # Align the label to the center
-                elif self.text_align == "center":
+                elif self.label_align == "center":
                     self._screen.blit(self._label, (
-                        self._rect.centerx - self._label.get_rect().width / 2, self._rect.y - self._font_size - 10))
+                        self._rect.centerx - self._label.get_rect().width / 2, self._rect.y - self._font_size - self.label_padding))
                 # Align the label to the right
-                elif self.text_align == "right":
+                elif self.label_align == "right":
                     self._screen.blit(self._label, (
-                        self._rect.x + self._rect.width - self._label.get_rect().width, self._rect.y - self._font_size - 10))
+                        self._rect.x + self._rect.width - self._label.get_rect().width, self._rect.y - self._font_size - self.label_padding))
 
             # Display the label on the bottom of the box
-            if self.text_side == "bottom":
+            if self.label_side == "bottom":
                 # Align the label to the left
-                if self.text_align == "left":
-                    self._screen.blit(self._label, (self._rect.x, self._rect.y + self._rect.height + 10))
+                if self.label_align == "left":
+                    self._screen.blit(self._label, (self._rect.x, self._rect.y +
+                                                    self._rect.height + self.label_padding))
                 # Align the label to the center
-                elif self.text_align == "center":
+                elif self.label_align == "center":
                     self._screen.blit(self._label, (
-                        self._rect.centerx - self._label.get_rect().width / 2, self._rect.y + self._rect.height + 10))
+                        self._rect.centerx - self._label.get_rect().width / 2, self._rect.y + self._rect.height + self.label_padding))
                 # Align the label to the right
-                elif self.text_align == "right":
+                elif self.label_align == "right":
                     self._screen.blit(self._label, (
-                        self._rect.x + self._rect.width - self._label.get_rect().width, self._rect.y + self._rect.height + 10))
+                        self._rect.x + self._rect.width - self._label.get_rect().width, self._rect.y + self._rect.height + self.label_padding))
 
             # Display the label on the left side of the box
-            if self.text_side == "left":
-                self._screen.blit(self._label, (self._rect.x - self._label.get_rect().width - 10,
+            if self.label_side == "left":
+                self._screen.blit(self._label, (self._rect.x - self._label.get_rect().width - self.label_padding,
                                                 self._rect.y + self._rect.height - self._label.get_rect().height))
             # Display the label on the right side of the box
-            if self.text_side == "right":
+            if self.label_side == "right":
                 self._screen.blit(self._label, (
-                    self._rect.x + self._rect.width + 10, self._rect.y + self._rect.height - self._label.get_rect().height))
+                    self._rect.x + self._rect.width + self.label_padding, self._rect.y + self._rect.height - self._label.get_rect().height))
 
         # Draw a square border if the style is "square" and a round border if the style is "circle"
         if self._style == "square":
@@ -229,7 +291,10 @@ class CheckBox:
         ---
 
         """
-
+        if type(x) != int:
+            raise TypeError(f"x must be an integer, not {type(x)}")
+        if type(y) != int:
+            raise TypeError(f"y must be an integer, not {type(y)}")
         # Move the widget
         self._x = x
         self._y = y
@@ -260,21 +325,25 @@ class CheckBox:
 
         # Try to use the string as a path to a font.
         # If it does not find a font file, it will raise a FileNotFoundError exception
-        try:
-            self._font = pg.font.Font(font, self._font_size)
-            # Save the font name or path to a variable
-            self._font_name = font
-
-        # We catch the exception and try to find a font installed in the system.
-        except FileNotFoundError:
+        if type(font) == str:
             try:
-                self._font = pg.font.SysFont(font, self._font_size)
+                self._font = pg.font.Font(font, self._font_size)
                 # Save the font name or path to a variable
                 self._font_name = font
 
-            # If it doesn't find any fonts, we raise a warning saying no font was found
-            except:
-                print("WARNING: Font not found")
+            # We catch the exception and try to find a font installed in the system.
+            except FileNotFoundError:
+                try:
+                    self._font = pg.font.SysFont(font, self._font_size)
+                    # Save the font name or path to a variable
+                    self._font_name = font
+
+                # If it doesn't find any fonts, we raise a warning saying no font was found
+                except:
+                    print("WARNING: Font not found")
+            self._label = self._font.render(self._text, 1, self._font_color)
+        else:
+            raise TypeError(f"font must be a string, not {type(font)}")
 
     def set_font_size(self, size):
         """
@@ -296,16 +365,20 @@ class CheckBox:
         """
 
         # If it is not installed, follow a path to the font file
-        try:
-            self._font = pg.font.Font(self._font_name, size)
+        if type(size) == int:
+            try:
+                self._font = pg.font.Font(self._font_name, size)
 
-        # If it is installed in the system, use the system one
-        except:
-            self._font = pg.font.SysFont(self._font_name, size)
-            # Store the font size in a variable
-            self._font_size = size
+            # If it is installed in the system, use the system one
+            except FileNotFoundError:
+                self._font = pg.font.SysFont(self._font_name, size)
+                # Store the font size in a variable
+                self._font_size = size
+            self._label = self._font.render(self._text, 1, self._font_color)
+        else:
+            raise TypeError(f"size must be an integer, not {type(size)}")
 
-    def set_font_color(self, color=(0, 0, 0)):
+    def set_font_color(self, color):
         """
         #### Description
         Set the widget's label font color.
@@ -323,10 +396,20 @@ class CheckBox:
         ---
 
         """
-
-        # Change the font color and re-render the label
-        self._font_color = color
-        self._label = self._font.render(self._text, 1, color)
+        if type(color) == tuple:
+            if len(color) != 3:
+                for i, n in enumerate(color):
+                    if type(n) == int:
+                        continue
+                    else:
+                        raise TypeError(f"Got type {type(n)} at index {i} instead of int.")
+                # Change the font color and re-render the label
+                self._font_color = color
+                self._label = self._font.render(self._text, 1, color)
+            else:
+                raise ValueError("Expected 3 values, got", len(color))
+        else:
+            raise TypeError("color must be a tuple, not", type(color))
 
     def set_size(self, size):
         """
@@ -346,18 +429,25 @@ class CheckBox:
         ---
 
         """
-        # Save the size to a variable and resize and reposition the rects
-        self._size = size
-        self.check_surface = pg.Surface((self._size - self._size / 10 * 2, self._size -
-                                         self._size / 10 * 2)).convert_alpha()
-        self._check_rect = self.check_surface.get_rect()
-        self._check_rect.topleft = (self._x + self._size / 10, self._y + self._size / 10)
-        self._image = pg.Surface((size, size))
-        self._rect = self._image.get_rect()
-        self._rect.x = self._x
-        self._rect.y = self._y
+        if type(size) == int:
+            if size > 0:
+                # Save the size to a variable and resize and reposition the rects
+                self._size = size
+                self.check_surface = pg.Surface((self._size - self._size / 10 * 2, self._size -
+                                                 self._size / 10 * 2)).convert_alpha()
+                self._check_rect = self.check_surface.get_rect()
+                self._check_rect.topleft = (self._x + self._size / 10, self._y + self._size / 10)
+                self._image = pg.Surface((size, size))
+                self._rect = self._image.get_rect()
+                self._rect.x = self._x
+                self._rect.y = self._y
+            else:
+                raise ValueError("Size must be greater than 0.")
 
-    def set_style(self, style="square"):
+        else:
+            raise TypeError("size must be an integer, not", type(size))
+
+    def set_style(self, style):
         """
         #### Description
         Set the check box style.
@@ -377,8 +467,7 @@ class CheckBox:
         """
         # Make sure the style is either "square" or "circle"
         if style not in ["square", "circle"]:
-            print("Style must be either \"square\" or \"circle\".")
-            raise SystemExit
+            raise ValueError("style must be either \"square\" or \"circle\".")
 
         # Change the style of the box
         else:
@@ -393,7 +482,7 @@ class CheckBox:
                     self._check_rect = pg.Rect(self._check_rect.x - 2, self._check_rect.y - 2, self._check_rect.width + 3,
                                                self._check_rect.height + 3)
 
-    def set_text(self, text=""):
+    def set_label(self, text):
         """
         #### Description
         Set the label of the widget.
@@ -412,5 +501,8 @@ class CheckBox:
 
         """
         # Save the text in a variable and re-render the label
-        self._text = text
-        self._label = self._font.render(self._text, 1, self._font_color)
+        if type(text) == str:
+            self._text = text
+            self._label = self._font.render(self._text, 1, self._font_color)
+        else:
+            raise TypeError("text must be a string, not", type(text))

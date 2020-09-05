@@ -31,16 +31,19 @@ The slider selects a number in a range from `0` to `max`
 
 ## Attributes
 
-| Attribute                | Description                                          | Type                                   | Content example |
-| :---------------         | :--------------------------------------------------- | :------------------------------------- | :-------------- |
-|self.bg_color             | RGB color of the background                          |tuple (red: int, green: int, blue: int) | (255,255,255)   |
-|self.border_color         | RGB color of the border                              |tuple (red: int, green: int, blue: int) | (255,255,255)   |
-|self.border_width         | Width in pixels of the border                        |int                                     | 3               |
-|self.max                  | Maximum value the slider can mark                    |int                                     | 100						 |
-|self.mark                 | The value the slider is marking                      |int                                     | 34 						 |
-|self.pointer_color        | RGB color of the pointer                             |tuple (red: int, green: int, blue: int) | (255,255,255)   |
-|self.pointer_border_color | RGB color of the pointer border                      |tuple (red: int, green: int, blue: int) | (255,255,255)   |
-|self.pointer_border_width | Width in pixels of the pointer border                |int                                     | 3               |
+| Attribute                | Description                                          | Type                                   | Content example             |
+| :----------------------- | :--------------------------------------------------- | :------------------------------------- | :-------------------------- |
+|self.bg_color             | RGB color of the background                          |tuple (red: int, green: int, blue: int) | (255,255,255)               |
+|self.border_color         | RGB color of the border                              |tuple (red: int, green: int, blue: int) | (255,255,255)               |
+|self.border_width         | Width in pixels of the border                        |int                                     | 3                           |
+|self.label_align	         | Where to align the label                             |str						                         |"left" "center" "right"      |
+|self.label_padding        | Distance in pixels between the label and the widget  |int                                     | 3                           |
+|self.label_side           | Side of the widget to display the label              |str		                				         |"top" "left" "right" "bottom"|
+|self.max                  | Maximum value the slider can mark                    |int                                     | 100						             |
+|self.mark                 | The value the slider is marking                      |int                                     | 34 						             |
+|self.pointer_color        | RGB color of the pointer                             |tuple (red: int, green: int, blue: int) | (255,255,255)               |
+|self.pointer_border_color | RGB color of the pointer border                      |tuple (red: int, green: int, blue: int) | (255,255,255)               |
+|self.pointer_border_width | Width in pixels of the pointer border                |int                                     | 3                           |
 
 ---
 
