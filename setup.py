@@ -12,9 +12,12 @@ import setuptools
 with open("README.md", "r") as fh:
     long_description = fh.read()
 
+with open("version.txt", r) as f:
+    version = f.read().strip()
+
 setuptools.setup(
     name="pgui",
-    version="0.0.13",
+    version=version,
     author="Ciro García",
     author_email="kolterdev@gmail.com",
     description="A GUI module compatible with pygame",
