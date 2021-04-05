@@ -249,8 +249,8 @@ class CheckBox:
                                                 self._rect.y + self._rect.height - self._label.get_rect().height))
             # Display the label on the right side of the box
             if self.label_side == "right":
-                self._screen.blit(self._label, (
-                    self._rect.x + self._rect.width + self.label_padding, self._rect.y + self._rect.height - self._label.get_rect().height))
+                self._screen.blit(self._label, (self._rect.x + self._rect.width + self.label_padding,
+                                                self._rect.y + self._rect.height - self._label.get_rect().height))
 
         # Draw a square border if the style is "square" and a round border if the style is "circle"
         if self._style == "square":
@@ -397,19 +397,14 @@ class CheckBox:
 
         """
         if type(color) == tuple:
-            if len(color) != 3:
-                for i, n in enumerate(color):
-                    if type(n) == int:
-                        continue
-                    else:
-                        raise TypeError(f"Got type {type(n)} at index {i} instead of int.")
+            if len(color) == 3:
                 # Change the font color and re-render the label
                 self._font_color = color
                 self._label = self._font.render(self._text, 1, color)
             else:
-                raise ValueError("Expected 3 values, got", len(color))
+                raise ValueError(f"Expected 3 values, got {len(color)}" )
         else:
-            raise TypeError("color must be a tuple, not", type(color))
+            raise TypeError(f"color must be a tuple, not {type(color)}")
 
     def set_size(self, size):
         """

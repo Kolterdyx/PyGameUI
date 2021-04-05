@@ -3,56 +3,12 @@
 # @Email:  kolterdev@gmail.com
 # @Project: Pygame GUI
 # @Last modified by:   kolterdyx
-# @Last modified time: 20-Aug-2020
+# @Last modified time: 2-Apr-2021
 # @License: This file is subject to the terms and conditions defined in file 'LICENSE', which is part of this source code package.
 
 
 import pygame as pg
-
-_letters = {
-    pg.K_a: ['a', 'A'],
-    pg.K_b: ['b', 'B'],
-    pg.K_c: ['c', 'C'],
-    pg.K_d: ['d', 'D'],
-    pg.K_e: ['e', 'E'],
-    pg.K_f: ['f', 'F'],
-    pg.K_g: ['g', 'G'],
-    pg.K_h: ['h', 'H'],
-    pg.K_i: ['i', 'I'],
-    pg.K_j: ['j', 'J'],
-    pg.K_k: ['k', 'K'],
-    pg.K_l: ['l', 'L'],
-    pg.K_m: ['m', 'M'],
-    pg.K_n: ['n', 'N'],
-    pg.K_o: ['o', 'O'],
-    pg.K_p: ['p', 'P'],
-    pg.K_q: ['q', 'Q'],
-    pg.K_r: ['r', 'R'],
-    pg.K_s: ['s', 'S'],
-    pg.K_t: ['t', 'T'],
-    pg.K_u: ['u', 'U'],
-    pg.K_v: ['v', 'V'],
-    pg.K_w: ['w', 'W'],
-    pg.K_x: ['x', 'X'],
-    pg.K_y: ['y', 'Y'],
-    pg.K_z: ['z', 'Z']
-
-}
-
-_characters = {
-    pg.K_SPACE: ' ',
-    pg.K_0: '0',
-    pg.K_1: '1',
-    pg.K_2: '2',
-    pg.K_3: '3',
-    pg.K_4: '4',
-    pg.K_5: '5',
-    pg.K_6: '6',
-    pg.K_7: '7',
-    pg.K_8: '8',
-    pg.K_9: '9',
-    pg.K_COMMA: ','
-}
+import keyboard
 
 
 class Entry:
@@ -143,16 +99,24 @@ class Entry:
         self._keypressed = False
         self._pressing = False
 
+        keyboard.on_press(self._add_char)
+
+        self._keywords = {
+            "backspace": self._remove_char
+        }
+
     def _add_char(self, char):
-        self._keypressed = True
-        if self.max_length:
-            if len(self.text) < self.max_length:
-                self.text += char
+        if char.name not in self._keywords:
+            if char.name not in keyboard.all_modifiers and char.name not in keyboard.sided_modifiers:
+                if self.max_length:
+                    if len(self.text) < self.max_length:
+                        self.text += char.name if char.name != "space" else " "
+                else:
+                    self.text += char.name if char.name != "space" else " "
         else:
-            self.text += char
+            self._keywords[char.name]()
 
     def _remove_char(self):
-        self._keypressed = True
         self.text = self.text[:-1]
 
     def _check_attributes(self):
@@ -213,44 +177,6 @@ class Entry:
         mousepos = pg.mouse.get_pos()
         p1, p2, p3 = pg.mouse.get_pressed()
 
-        keys = pg.key.get_pressed()
-        count = 0
-        for i in keys:
-            count += i
-        if count >= 1:
-            self._pressing = True
-        else:
-            self._pressing = False
-
-        if self.typing and not self._keypressed:
-            for a in _characters:
-                if keys[a]:
-                    self._add_char(_characters[a])
-            for b in _letters:
-                if keys[b] and (keys[pg.K_LSHIFT] or keys[pg.K_RSHIFT]):
-                    self._add_char(_letters[b][1])
-                if keys[b] and not (keys[pg.K_LSHIFT] or keys[pg.K_RSHIFT]):
-                    self._add_char(_letters[b][0])
-            if keys[pg.K_BACKSPACE]:
-                self._keypressed = True
-                self._remove_char()
-            if keys[pg.K_RETURN]:
-                self._keypressed = True
-                if self.func:
-                    self.func()
-                else:
-                    self.typing = False
-
-        elif self.typing and self._keypressed:
-            if self._type_cooldown >= 30 and self._pressing:
-                self._keypressed = False
-                self._type_cooldown = 0
-            else:
-                self._type_cooldown += 1
-        if self._type_cooldown >= 60 and not self._pressing:
-            self._keypressed = False
-            self._type_cooldown = 0
-
         if p1:
             if self._rect.collidepoint(mousepos):
                 self.typing = True
@@ -278,29 +204,29 @@ class Entry:
         if self._ltext.strip() != "":
             if self.label_side == "top":
                 if self.label_align == "left":
-                    self._screen.blit(self._label, (self._rect.x, self._rect.y - self._font_size - self.label_padding))
+                    self._screen.blit(self._tlabel, (self._rect.x, self._rect.y - self._font_size - self.label_padding))
                 elif self.label_align == "center":
-                    self._screen.blit(self._label, (
+                    self._screen.blit(self._tlabel, (
                         self._rect.centerx - self._label_rect.width / 2, self._rect.y - self._font_size - self.label_padding))
                 elif self.label_align == "right":
-                    self._screen.blit(self._label, (
+                    self._screen.blit(self._tlabel, (
                         self._rect.x + self._rect.width - self._label_rect.width, self._rect.y - self._font_size - self.label_padding))
             if self.label_side == "bottom":
                 if self.label_align == "left":
-                    self._screen.blit(self._label, (self._rect.x, self._rect.y +
-                                                    self._rect.height + self.label_padding))
+                    self._screen.blit(self._tlabel, (self._rect.x, self._rect.y +
+                                                     self._rect.height + self.label_padding))
                 elif self.label_align == "center":
-                    self._screen.blit(self._label, (
+                    self._screen.blit(self._tlabel, (
                         self._rect.centerx - self._label_rect.width / 2, self._rect.y + self._rect.height + self.label_padding))
                 elif self.label_align == "right":
-                    self._screen.blit(self._label, (
+                    self._screen.blit(self._tlabel, (
                         self._rect.x + self._rect.width - self._label_rect.width, self._rect.y + self._rect.height + self.label_padding))
             if self.label_side == "left":
-                self._screen.blit(self._label, (self._rect.x - self._label_rect.width - self.label_padding,
-                                                self._rect.y + self._rect.height - self._label_rect.height))
+                self._screen.blit(self._tlabel, (self._rect.x - self._label_rect.width - self.label_padding,
+                                                 self._rect.y + self._rect.height - self._label_rect.height))
             if self.label_side == "right":
-                self._screen.blit(self._label, (self._rect.x + self._rect.width + self.label_padding,
-                                                self._rect.y + self._rect.height - self._label_rect.height))
+                self._screen.blit(self._tlabel, (self._rect.x + self._rect.width + self.label_padding,
+                                                 self._rect.y + self._rect.height - self._label_rect.height))
 
     def clear(self):
         """
@@ -400,12 +326,7 @@ class Entry:
 
         """
         if type(color) == tuple:
-            if len(color) != 3:
-                for i, n in enumerate(color):
-                    if type(n) == int:
-                        continue
-                    else:
-                        raise TypeError(f"Got type {type(n)} at index {i} instead of int.")
+            if len(color) == 3:
                 # Change the font color and re-render the label
                 self._font_color = color
                 self._label = self._font.render(self.text, 1, color)

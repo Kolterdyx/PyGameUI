@@ -72,6 +72,8 @@ class Slider:
         mousepos = pg.mouse.get_pos()
         p1, p2, p3 = pg.mouse.get_pressed()
 
+        self.max = int(self.max)
+
         self._pos = (self._x, self._y)
         self._x, self._y = self._pos
 
@@ -258,12 +260,7 @@ class Slider:
 
         """
         if type(color) == tuple:
-            if len(color) != 3:
-                for i, n in enumerate(color):
-                    if type(n) == int:
-                        continue
-                    else:
-                        raise TypeError(f"Got type {type(n)} at index {i} instead of int.")
+            if len(color) == 3:
                 # Change the font color and re-render the label
                 self._font_color = color
                 self._label = self._font.render(self._text, 1, color)

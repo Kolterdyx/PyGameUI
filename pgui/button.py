@@ -271,13 +271,9 @@ class Button:
 
         """
         if type(color) != tuple:
-            raise TypeError("color must be a tuple, not", type(color))
+            raise TypeError(f"color must be a tuple, not {type(color)}")
         elif len(color) != 3:
-            raise ValueError("Expected 3 values, got,", len(color))
-        elif len(color) == 3 and type(color) == tuple:
-            for i, n in enumerate(color):
-                if type(n) != int:
-                    raise ValueError(f"Got type {type(n)} at index {i} instead of int.")
+            raise ValueError(f"Expected 3 values, got, {len(color)}")
 
         else:
             self._font_color = color

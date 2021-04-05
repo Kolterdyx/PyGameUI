@@ -1,4 +1,12 @@
 # ChangeLog
+### 0.0.10 - 0.0.13
+* Added a proper keyboard handler to the Entry widget.
+* Fixed a few bugs in all the `set_font_color()` functions involving error handling.
+
+### 0.0.9
+* Fixed a bug in the Entry.
+* Added tests.
+
 ### 0.0.8
 * Fixed some bugs in the Slider.
 * Added attribute `self.label_padding` to all widgets with an external label.
