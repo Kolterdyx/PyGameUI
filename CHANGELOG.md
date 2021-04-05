@@ -1,4 +1,11 @@
 # ChangeLog
+
+### 0.0.17
+* Fixed a fatal error in the `setup.py` file
+
+### 0.0.14
+* Fixed a bug in the `setup.py` file
+
 ### 0.0.10 - 0.0.13
 * Added a proper keyboard handler to the Entry widget.
 * Fixed a few bugs in all the `set_font_color()` functions involving error handling.

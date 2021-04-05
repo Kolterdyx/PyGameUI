@@ -1,24 +1,14 @@
-# @Author: Ciro García <kolterdyx>
-# @Date:   14-Aug-2020
-# @Email:  kolterdev@gmail.com
-# @Project: Pygame GUI
-# @Last modified by:   kolterdyx
-# @Last modified time: 16-Aug-2020
-# @License: This file is subject to the terms and conditions defined in file 'LICENSE', which is part of this source code package.
 
-
+# -*- coding: UTF-8 -*-
 import setuptools
 
 with open("README.md", "r") as fh:
     long_description = fh.read()
 
-with open("version.txt", r) as f:
-    version = f.read().strip()
-
 setuptools.setup(
     name="pgui",
-    version=version,
-    author="Ciro García",
+    version="0.0.17",
+    author="Ciro Garcia",
     author_email="kolterdev@gmail.com",
     description="A GUI module compatible with pygame",
     long_description=long_description,
