@@ -61,3 +61,5 @@ for i in remove:
         shutil.rmtree(i)
     except:
         continue
+
+print(f"Finished uploading version: {version}")

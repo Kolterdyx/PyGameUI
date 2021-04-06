@@ -71,6 +71,7 @@ class Entry:
         self.label_side = "top"
         self.label_align = "left"
         self.label_padding = 3
+        self.func = func if func else self.clear
         # --------------------------
 
         self._x = y
@@ -83,7 +84,6 @@ class Entry:
 
         self._c = 0
         self._cc = 1
-        self._type_cooldown = 0
 
         self._font_size = size
         self._screen = parent.screen
@@ -96,25 +96,31 @@ class Entry:
         self._label = self._font.render(self.text, 1, self._font_color)
         self._ltext = ""
         self._tlabel = self._font.render(self._ltext, 1, self._font_color)
-        self._keypressed = False
-        self._pressing = False
 
         keyboard.on_press(self._add_char)
 
         self._keywords = {
-            "backspace": self._remove_char
+            "backspace": self._remove_char,
+            "esc": self._stop_typing,
+            "return": self.func,
+            "enter": self.func
         }
 
+        self._letters = "ABCDEFGHIJKLMNÑOPQRSTUVWXYZabcdefghijklmnñopqrstuvwxyz1234567890º'¡`+´ç,.-;:_¨Ç*^¿?=)(/&%$·\"!ª\\|@#~€¬[]\{\}"
+
     def _add_char(self, char):
-        if char.name not in self._keywords:
-            if char.name not in keyboard.all_modifiers and char.name not in keyboard.sided_modifiers:
+        if self.typing:
+            if char.name in self._letters:
                 if self.max_length:
                     if len(self.text) < self.max_length:
                         self.text += char.name if char.name != "space" else " "
                 else:
                     self.text += char.name if char.name != "space" else " "
-        else:
-            self._keywords[char.name]()
+            elif char.name in self._keywords:
+                self._keywords[char.name]()
+
+    def _stop_typing(self):
+        self.typing = False
 
     def _remove_char(self):
         self.text = self.text[:-1]
@@ -192,8 +198,6 @@ class Entry:
         self._image.fill(self.bg_color)
         if self.typing:
             self._image.blit(self._cursor, self._cursor_rect)
-        if self._ltext.strip() != "":
-            self._screen.blit(self._tlabel, (self._rect.x, self._rect.y-self._tlabel.get_rect().height-3))
         self._image.blit(self._label, self._label_rect)
         self._screen.blit(self._image, self._rect)
 
@@ -268,7 +272,7 @@ class Entry:
         None
 
         #### Usage
-        `Entry.set_text("This is a check box")`
+        `Entry.set_label("This is a check box")`
 
         ---
 
@@ -297,15 +301,12 @@ class Entry:
         ---
 
         """
-        if type(font) == str:
-            self._font_name = font
-            try:
-                self._font = pg.font.Font(font, self._font_size)
-            except FileNotFoundError:
-                self._font = pg.font.SysFont(font, self._font_size)
-            self._label = self._font.render(self.text, 1, self._font_color)
-        else:
-            raise TypeError("font must be a string, not", type(font))
+        try:
+            self._font = pg.font.Font(font, self._font_size)
+        except:
+            self._font = pg.font.SysFont(font, self._font_size)
+        self._label = self._font.render(self.text, 1, self._font_color)
+        self._tlabel = self._font.render(self._ltext, 1, self._font_color)
 
     def set_font_color(self, color):
         """
@@ -330,6 +331,7 @@ class Entry:
                 # Change the font color and re-render the label
                 self._font_color = color
                 self._label = self._font.render(self.text, 1, color)
+                self._tlabel = self._font.render(self._ltext, 1, self._font_color)
             else:
                 raise ValueError("Expected 3 values, got", len(color))
         else:
@@ -363,10 +365,11 @@ class Entry:
                 # Store the font size in a variable
                 self._font_size = size
             self._label = self._font.render(self.text, 1, self._font_color)
+            self._tlabel = self._font.render(self._ltext, 1, self._font_color)
         else:
             raise TypeError(f"size must be an integer, not {type(size)}")
 
-        self._rect = pg.Rect(self._pos, (self.width, size + size / 4))
+        self._rect = pg.Rect(self._pos, (self.width, size + size / 2))
         self._image = pg.Surface(self._rect.size).convert_alpha()
 
         self._cursor = pg.Surface((size / 10, size)).convert_alpha()

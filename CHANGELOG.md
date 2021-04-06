@@ -1,10 +1,30 @@
 # ChangeLog
+### 0.0.28
+* Added more characters to the Entry and gave it a default function to execute when the return key is pressed.
+
+### 0.0.27
+* Fixed a bug in the Slider that moved the pointer back to 0 when the `move()` function was used.
+
+### 0.0.26
+* Added functionality to the escape key (deselect the currently selected Entry) and to the return/enter key (execute a function specified with the `self.func` attribue)
+
+### 0.0.25
+* Implemented a better solution for adding the characters to the Entry input.
+
+### 0.0.24
+* Fixed a bug that registered key strokes even when no Entries were selected.
+
+### 0.0.21
+* Added automatic updating to the Entry widget's label.
+
+### 0.0.18
+* Fixed a bug in the Entry widget that duplicated the label.
 
 ### 0.0.17
-* Fixed a fatal error in the `setup.py` file
+* Fixed a fatal error in the `setup.py` file.
 
 ### 0.0.14
-* Fixed a bug in the `setup.py` file
+* Fixed a bug in the `setup.py` file.
 
 ### 0.0.10 - 0.0.13
 * Added a proper keyboard handler to the Entry widget.

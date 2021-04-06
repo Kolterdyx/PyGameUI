@@ -364,6 +364,8 @@ class Slider:
         #### Usage
         `Slider.move(200,300)`
         """
+
+        m = self.mark
         if type(x) != int:
             raise TypeError(f"x must be an integer, not {type(x)}")
         if type(y) != int:
@@ -373,3 +375,4 @@ class Slider:
         self._pos = (x, y)
         self._rect.topleft = self._pos
         self._prect.topleft = self._pos
+        self.set_mark(m)
