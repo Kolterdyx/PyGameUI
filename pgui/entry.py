@@ -72,6 +72,7 @@ class Entry:
         self.label_align = "left"
         self.label_padding = 3
         self.func = func if func else self.clear
+        self.allowed_characters = ""
         # --------------------------
 
         self._x = y
@@ -106,11 +107,12 @@ class Entry:
             "enter": self.func
         }
 
-        self._letters = "ABCDEFGHIJKLMNÑOPQRSTUVWXYZabcdefghijklmnñopqrstuvwxyz1234567890º'¡`+´ç,.-;:_¨Ç*^¿?=)(/&%$·\"!ª\\|@#~€¬[]\{\}"
+        self._characters = "ABCDEFGHIJKLMNÑOPQRSTUVWXYZabcdefghijklmnñopqrstuvwxyz1234567890º'¡`+´ç,.-;:_¨Ç*^¿?=)(/&%$·\"!ª\\|@#~€¬[]\{\}"
+        self.allowed_characters = self._characters
 
     def _add_char(self, char):
-        if self.typing:
-            if char.name in self._letters:
+        if self.typing and pg.mouse.get_focused():
+            if char.name in self.allowed_characters:
                 if self.max_length:
                     if len(self.text) < self.max_length:
                         self.text += char.name if char.name != "space" else " "
@@ -123,7 +125,8 @@ class Entry:
         self.typing = False
 
     def _remove_char(self):
-        self.text = self.text[:-1]
+        if pg.mouse.get_focused():
+            self.text = self.text[:-1]
 
     def _check_attributes(self):
         if type(self.bg_color) != tuple:
@@ -169,6 +172,19 @@ class Entry:
 
         self._check_attributes()
 
+        self._keywords["enter"] = self.func
+
+
+
+        mousepos = pg.mouse.get_pos()
+        p1, p2, p3 = pg.mouse.get_pressed()
+
+        if p1:
+            if self._rect.collidepoint(mousepos):
+                self.typing = True
+            else:
+                self.typing = False
+
         self._label = self._font.render(self.text, 1, self._font_color)
 
         if self._c < 100 and self._cc == 1:
@@ -179,15 +195,6 @@ class Entry:
             self._cursor.fill((0, 0, 0, 0))
         else:
             self._cc *= -1
-
-        mousepos = pg.mouse.get_pos()
-        p1, p2, p3 = pg.mouse.get_pressed()
-
-        if p1:
-            if self._rect.collidepoint(mousepos):
-                self.typing = True
-            else:
-                self.typing = False
 
         self._label_rect = self._label.get_rect()
         self._label_rect.x = self._rect.height/20 + self.border_width*2 - self.offset
@@ -375,6 +382,9 @@ class Entry:
         self._cursor = pg.Surface((size / 10, size)).convert_alpha()
         self._cursor_rect = self._cursor.get_rect()
         self._label = self._font.render(self.text, 1, self._font_color)
+
+    def reset_allowed_characters(self):
+        self.allowed_characters = self._characters
 
     def move(self, x, y):
         """

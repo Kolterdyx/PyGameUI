@@ -1,4 +1,20 @@
 # ChangeLog
+### 0.0.33
+* Added an `self.allowed_characters` attribute to the Entry widget.
+* Added a `self.reset_allowed_characters()` function to the Entry widget.
+
+### 0.0.32
+* The Entry was still storing keyboard data, now it's not.
+
+### 0.0.31
+* Fixed a bug that unloaded the Entry when the mouse was out of focus
+
+### 0.0.30
+* Fixed a bug in the Entry that allowed it to store key presses even when the window is out of focus
+
+### 0.0.29
+* Fixed a bug in the Entry custom function
+
 ### 0.0.28
 * Added more characters to the Entry and gave it a default function to execute when the return key is pressed.
 
@@ -6,7 +22,7 @@
 * Fixed a bug in the Slider that moved the pointer back to 0 when the `move()` function was used.
 
 ### 0.0.26
-* Added functionality to the escape key (deselect the currently selected Entry) and to the return/enter key (execute a function specified with the `self.func` attribue)
+* Added functionality to the escape key (deselect the currently selected Entry) and to the return/enter key (execute a function specified with the `self.func` attribute)
 
 ### 0.0.25
 * Implemented a better solution for adding the characters to the Entry input.
