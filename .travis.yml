@@ -4,4 +4,6 @@ rvm:
 
 install:
  - pip install -r requirements.txt
-script: ./build.py
+
+script:
+ - python3 setup.py build
