@@ -2,5 +2,6 @@ language: python
 rvm:
  - 3.8.6
 
-install: skip
+install:
+ - pip install -r requirements.txt
 script: ./build.py

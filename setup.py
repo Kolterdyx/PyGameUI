@@ -20,6 +20,7 @@ setuptools.setup(
     packages=setuptools.find_namespace_packages(),
     install_requires=[
         "keyboard",
+        "pygame"
     ],
     classifiers=[
         "Programming Language :: Python :: 3",
