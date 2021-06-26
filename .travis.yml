@@ -1,4 +1,6 @@
 language: python
 rvm:
  - 3.8.6
+
+install: skip
 script: ./build.py
