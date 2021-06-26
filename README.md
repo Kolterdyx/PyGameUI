@@ -1,4 +1,4 @@
-# PyGameUI
+# PyGameUI ![](https://travis-ci.com/Kolterdyx/PyGameUI.svg?branch=master)
 
 PyGameUI (or pgui) is a Python library for creating simple GUIs in pygame
 
