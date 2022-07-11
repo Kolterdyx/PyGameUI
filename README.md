@@ -1,3 +1,6 @@
+## WARNING
+This library is no longer being developed. I made it as a personal project when I was 16 so I could add GUIs to some other projects I had, but I don't recommend using this for anything. I will not accept PRs and I will not read issues. If you want to continue the development of this library or want to use the name `pgui` for your library in [Pypi](https://pypi.org/), contact me and I'll hand over ownership for both the project on Pypi and the repo if you want it.
+
 # PyGameUI ![](https://travis-ci.com/Kolterdyx/PyGameUI.svg?branch=master)
 
 PyGameUI (or pgui) is a Python library for creating simple GUIs in pygame
@@ -61,14 +64,14 @@ while True:
 You can read the documentation [here](https://github.com/Kolterdyx/PyGameUI/wiki)
 
 ## Development
-This module is still being developed, and it may be unstable or buggy.
+Abandoned
 
 ## ChangeLog
 
 You can see the change logs [here](https://github.com/Kolterdyx/PyGameUI/blob/master/CHANGELOG.md)
 
 ## Contributing
-Pull requests are welcome. For major changes, please open an issue first to discuss what you would like to change.
+Please do not contribute. The project is abandoned
 
 ## License
 [MIT](https://choosealicense.com/licenses/mit/)
